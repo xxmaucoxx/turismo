@@ -8,9 +8,9 @@ import com.facebook.appevents.AppEventsLogger;
 
 public class turismoApp extends Application{
     @Override
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
-        FacebookSdk.sdkInitialize(FacebookSdk.getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
     }
 }
