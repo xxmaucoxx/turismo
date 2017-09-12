@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">turismo</string>
+    <string name="facebook_app_id">1956352954612641</string>
+    <string name="fb_login_protocol_scheme">fb1956352954612641</string>
+    <string name="error_login">Error al logear</string>
+    <string name="cancel_login">Se cancelo el logeo</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="firebase_error_login">Error al inicar la Sesión</string>
+</resources>
