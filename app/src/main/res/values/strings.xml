@@ -6,4 +6,12 @@
     <string name="cancel_login">Se cancelo el logeo</string>
     <string name="logout">Cerrar Sesión</string>
     <string name="firebase_error_login">Error al inicar la Sesión</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="mapa">mapa</string>
+    <string name="inicio">inicio</string>
+    <string name="perfil">perfil</string>
+    <string name="sitios">tiendas</string>
+    <string name="favoritos">hola</string>
 </resources>
