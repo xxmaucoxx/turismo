@@ -10,6 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -34,7 +35,7 @@ dependencies {
     compile 'com.android.support:design:25.0.0'
     testCompile 'junit:junit:4.12'
 
+    compile 'com.google.android.gms:play-services-maps:10.2.6'
 
-    compile 'com.google.android.gms:play-services:10.2.6'
 }
 apply plugin: 'com.google.gms.google-services'
