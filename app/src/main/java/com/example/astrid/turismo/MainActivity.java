@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final Fragment perfilFragment = new SeccionPerfil();
-        final Fragment mapaFragment = new SeccionMapa();
+        final Fragment mapaFragment = new SeccionMapa(getApplicationContext());
         final Fragment storeFragment = new SeccionStore();
         final Fragment homeFragment = new SeccionInicio();
 

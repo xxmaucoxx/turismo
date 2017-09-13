@@ -4,14 +4,10 @@
     android:layout_height="match_parent"
     tools:context="com.example.astrid.turismo.SeccionMapa">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Mapa"
-        android:textSize="20sp" />
+    <com.google.android.gms.maps.MapView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mapId"
+        />
 
 </RelativeLayout>
