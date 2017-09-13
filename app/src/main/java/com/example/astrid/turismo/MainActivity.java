@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentContainer, perfilFragment).commit();
+            fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
         }
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
