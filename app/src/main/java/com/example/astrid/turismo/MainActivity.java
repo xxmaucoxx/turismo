@@ -9,13 +9,28 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.astrid.turismo.adaptadores.ListaPokemonAdapter;
+import com.example.astrid.turismo.api.PokeapiService;
+import com.example.astrid.turismo.models.Pokemon;
+import com.example.astrid.turismo.models.PokemonRespuesta;
 import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView uidTextView;
 
     private BottomNavigationView bottomNavigationView;
+
 
 
 
@@ -75,7 +91,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+
     }
+
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);

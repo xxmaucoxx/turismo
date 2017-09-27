@@ -14,4 +14,12 @@
         android:text="Noticias o inicio"
         android:textSize="20sp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="logout"
+        android:text="@string/logout" />
+
 </RelativeLayout>
