@@ -19,16 +19,24 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 
 public class SeccionInicio extends Fragment {
     RecyclerView rv;
     List<Post> posts;
     AdapterPost adapterPost;
+    String lastkey;
+    String passkey = null;
+    String changes = null;
+    int countArrow = 0;
+
     private boolean aptoParaCargar = true;
     private static final String TAG = "MyActivity";
 
@@ -50,19 +58,22 @@ public class SeccionInicio extends Fragment {
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
-        DatabaseReference postRef = ref.child("puntos/Perú/Moquegua/post");
+        Query postRef = ref.child("puntos/Perú/Moquegua/post").limitToFirst(5);
 
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         adapterPost = new AdapterPost(posts,getContext());
         rv.setAdapter(adapterPost);
 
-        postRef.addValueEventListener(new ValueEventListener() {
+        aptoParaCargar = true;
+
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 posts.removeAll(posts);
                 for( DataSnapshot snapshot :
                         dataSnapshot.getChildren()){
+                    lastkey = snapshot.getKey();
                     Post post = snapshot.getValue(Post.class);
                     posts.add(post);
                 }
@@ -100,30 +111,43 @@ public class SeccionInicio extends Fragment {
         return vista;
     }
     private void obtenerDatos() {
+
+        Log.i(TAG, "------------------  >  Empezando el conteoo desde : " + lastkey);
+        passkey = lastkey;
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference postRef = ref.child("puntos/Perú/Moquegua/post");
+        Query postRef = ref.child("puntos/Perú/Moquegua/post").orderByKey().endAt(lastkey).limitToLast(5);
 
-
-        adapterPost = new AdapterPost(posts,getContext());
-        rv.setAdapter(adapterPost);
-
-        postRef.addValueEventListener(new ValueEventListener() {
+        aptoParaCargar = false;
+        countArrow = 0;
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for( DataSnapshot snapshot :
-                        dataSnapshot.getChildren()){
-                    Post post = snapshot.getValue(Post.class);
-                    posts.add(post);
+                for( DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if (!Objects.equals(passkey, snapshot.getKey())){
+                        Log.i(TAG, "|||| mi key : " + snapshot.getKey());
+                        adapterPost.adicionarListaPost(snapshot.getValue(Post.class));
+                    }
+                    countArrow++;
+                    if (countArrow == 1){
+                        lastkey = snapshot.getKey();
+                    }
                 }
-                adapterPost.notifyDataSetChanged();
+                passkey = lastkey;
+                Log.i(TAG, "########### " + countArrow);
+                if (countArrow < 2){
+                    aptoParaCargar = false;
+                }else{
+                    aptoParaCargar = true;
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
-        aptoParaCargar = true;
 
     }
 

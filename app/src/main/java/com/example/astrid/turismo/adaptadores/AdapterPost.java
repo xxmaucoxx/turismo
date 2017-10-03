@@ -15,6 +15,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.astrid.turismo.R;
 import com.example.astrid.turismo.models.Post;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -43,36 +44,31 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
         holder.txt_name.setText(post.getName());
         holder.txt_update.setText("fecha");
         String url = post.getImgPost();
-        Log.i(TAG,"hola");
-        Log.i(TAG,url);
-        Log.i(TAG,"End");
-        if (url.length() < 2){
-            Log.i(TAG,"sin imagen");
-            holder.img_post.getLayoutParams().height=0;
-            holder.txt_contenido.setText(Html.fromHtml("<p size='40'>" + post.getDecripcion() + "</p>"));
 
-        }else{
-            Log.i(TAG,"con imagen");
-            holder.txt_contenido.setText(post.getDecripcion());
-            Glide.with(context)
-                    .load(post.getImgPost())
-                    .centerCrop()
-                    .crossFade()
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .into(holder.img_post);
-        }
+        holder.txt_contenido.setText(post.getDecripcion());
+        Glide.with(context)
+                .load(post.getImgPost())
+                .crossFade()
+                .centerCrop()
+                .placeholder(R.drawable.com_facebook_button_login_background).into(holder.img_post);
+
 
         Glide.with(context)
                 .load(post.getImg())
-                .centerCrop()
                 .crossFade()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .centerCrop()
+                .placeholder(R.drawable.com_facebook_button_login_background)
                 .into(holder.img_store);
     }
 
     @Override
     public int getItemCount() {
         return posts.size();
+    }
+
+    public void adicionarListaPost(Post value) {
+        posts.add(value);
+        notifyDataSetChanged();
     }
 
     public static class PostViewHolder extends RecyclerView.ViewHolder{
@@ -92,4 +88,5 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
             img_store = (ImageView) itemView.findViewById(R.id.img_store);
         }
     }
+
 }
