@@ -8,10 +8,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.astrid.turismo.models.Mark;
+import com.example.astrid.turismo.models.Point;
+import com.example.astrid.turismo.models.Site;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -23,6 +27,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class SeccionMapa extends Fragment implements OnMapReadyCallback, LocationListener {
 
@@ -35,9 +49,20 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
     boolean gpsActivo;
 
     private Marker yo;
+    private Marker ubicacion;
+
     double lat = 0.0;
     double lng = 0.0;
     public LocationManager locationManager;
+
+
+    // Puntos y marcadores
+    List<Mark> marks;
+
+    private static final String TAG = "MyActivity";
+
+    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+    Query postRef = ref.child("puntos/Perú/Moquegua/points");
 
     public SeccionMapa() {
         super();
@@ -54,6 +79,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_seccion_mapa, container, false);
+
         return mView;
     }
 
@@ -68,8 +94,22 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             mMapView.onResume();
             mMapView.getMapAsync(this);
         }
-    }
+        marks = new ArrayList<>();
 
+    }
+    private void printMarker() {
+
+        for (Mark mark : marks) {
+            double lat = Double.parseDouble(mark.getLatitud());
+            double lng = Double.parseDouble(mark.getLongitud());
+            LatLng coordenadas = new LatLng(lat, lng);
+            ubicacion = nGoogleMap.addMarker(new MarkerOptions()
+                    .position(coordenadas)
+                    .title("Sitio"));
+
+        }
+
+    }
     public void onMapReady(GoogleMap googleMap) {
 
         MapsInitializer.initialize(getContext());
@@ -82,8 +122,35 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
         CameraPosition Liberty = CameraPosition.builder().target(new LatLng(-17.211374, -70.941150)).zoom(16).bearing(0).tilt(45).build();
         googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(Liberty));
         getLocation();
-    }
+        getData();
 
+
+    }
+    public void getData() {
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for( DataSnapshot dsp : dataSnapshot.getChildren()){
+                    Point point = dsp.getValue(Point.class);
+                    if (dsp.child("ubicacion").getValue() != null) {
+                        for (DataSnapshot emp : dsp.child("ubicacion").getChildren()) {
+                            Site site = emp.getValue(Site.class);
+                            Mark mark = new Mark(dsp.getKey(),point.getCategoryStore(),point.getCloseStore(),point.getImgProfile(),point.getNameStore(),point.getOpenStore(),site.getDireccion(),site.getLatitud(),site.getLongitud());
+                            marks.add(mark);
+                        }
+
+                    }
+                }
+                printMarker();
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
     public void addMarcador(double lat, double lng) {
         LatLng coordenadas = new LatLng(lat, lng);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 16);
@@ -91,7 +158,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
         yo = nGoogleMap.addMarker(new MarkerOptions()
                 .position(coordenadas)
                 .title("Yo")
-                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_locat)));
+                .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_yo)));
         nGoogleMap.animateCamera(miUbicacion);
     }
 

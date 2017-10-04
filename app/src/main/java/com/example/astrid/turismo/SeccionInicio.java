@@ -75,6 +75,7 @@ public class SeccionInicio extends Fragment {
                         dataSnapshot.getChildren()){
                     lastkey = snapshot.getKey();
                     Post post = snapshot.getValue(Post.class);
+                    Log.i(TAG,post.getName());
                     posts.add(post);
                 }
                 adapterPost.notifyDataSetChanged();
@@ -112,7 +113,6 @@ public class SeccionInicio extends Fragment {
     }
     private void obtenerDatos() {
 
-        Log.i(TAG, "------------------  >  Empezando el conteoo desde : " + lastkey);
         passkey = lastkey;
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
