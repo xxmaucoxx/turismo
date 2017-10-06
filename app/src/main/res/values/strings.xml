@@ -15,4 +15,10 @@
     <string name="sitios">tiendas</string>
     <string name="favoritos">hola</string>
     <string name="noticias_o_inicio">Noticias o inicio</string>
+    <string name="oo">gola</string>
+    <string name="action_add_current_contact">pAtras</string>
+    <string name="action_my_contacts">action_my-.contacts</string>
+    <string name="action_about">action_about</string>
+    <string name="action_settings">action_settings</string>
+    <string name="atras">retroceder</string>
 </resources>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/edit_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/menu_nameStore"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Nombre la Tienda"
+            android:textSize="24sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/open_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/ic_menu_store" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|fill_horizontal"
+            android:text="Información" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/service_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/ic_menu_play" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Productos y servicios" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/photo_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/ic_menu_photos" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Fotos" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/route_store"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="16dp"
+            android:src="@mipmap/ic_menu_direcction" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="Trazar ruta" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
