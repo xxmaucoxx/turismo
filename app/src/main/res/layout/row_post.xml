@@ -15,7 +15,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="5dp">
 
             <ImageView
                 android:id="@+id/img_store"
@@ -54,10 +55,10 @@
         <ImageView
             android:id="@+id/img_post"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="0dp"
             android:layout_marginTop="8dp"
             android:adjustViewBounds="true"
-            android:background="@color/fondo"
+            android:background="@color/com_facebook_button_background_color_disabled"
             android:scaleType="centerCrop" />
 
 
@@ -71,30 +72,71 @@
             android:paddingTop="10dp"
             android:text="Descripcion de contenido de la tienda" />
 
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_weight="6.94"
-            android:orientation="horizontal">
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="3"
+            android:orientation="horizontal"
+            android:weightSum="1.0">
 
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:background="@color/cardview_light_background"
-                android:src="@drawable/ic_head" />
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.333"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1">
 
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:background="@color/cardview_light_background"
-                android:src="@drawable/ic_coment" />
+                <Button
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:layout_weight="0.5"
+                    android:drawableLeft="@drawable/ic_head"
+                    android:text="Me Gusta"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="10sp" />
 
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:background="@color/cardview_light_background"
-                android:src="@drawable/ic_exit_to_app_black_24dp" />
 
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight=".333"
+                android:orientation="vertical">
+
+                <Button
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:drawableLeft="@drawable/ic_coment"
+                    android:padding="8dp"
+                    android:text="Comentarios"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="10sp" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.333"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:drawableLeft="?attr/actionModeShareDrawable"
+                    android:text="Compartir"
+                    android:textColor="@color/cardview_dark_background"
+                    android:textSize="10sp" />
+            </LinearLayout>
         </LinearLayout>
 
 

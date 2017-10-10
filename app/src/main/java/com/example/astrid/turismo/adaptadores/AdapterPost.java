@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +16,7 @@ import com.example.astrid.turismo.R;
 import com.example.astrid.turismo.models.Post;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHolder>{
@@ -45,18 +47,25 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
 
         holder.txt_contenido.setText(post.getDecripcion());
         Glide.with(context)
-                .load(post.getImgPost())
-                .crossFade()
-                .centerCrop()
-                .placeholder(R.drawable.com_facebook_button_login_background).into(holder.img_post);
-
-
-        Glide.with(context)
                 .load(post.getImg())
                 .crossFade()
                 .centerCrop()
                 .placeholder(R.drawable.com_facebook_button_login_background)
                 .into(holder.img_store);
+
+        if (!Objects.equals(url, "")){
+
+            ViewGroup.LayoutParams params = holder.img_post.getLayoutParams();
+            params.height = 320;
+            holder.img_post.setLayoutParams(params);
+            Glide.with(context)
+                    .load(post.getImgPost())
+                    .crossFade()
+                    .centerCrop()
+                    .into(holder.img_post);
+
+        }
+
     }
 
     @Override

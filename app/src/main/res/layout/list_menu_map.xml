@@ -8,6 +8,7 @@
         android:id="@+id/edit_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/fondoMenu"
         android:orientation="horizontal"
         android:padding="16dp">
 
@@ -24,12 +25,13 @@
         android:id="@+id/open_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/fondoMenu"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_menu_store" />
 
@@ -37,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|fill_horizontal"
-            android:text="Información" />
+            android:text="Información"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -45,12 +48,13 @@
         android:id="@+id/service_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/fondoMenu"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_menu_play" />
 
@@ -58,19 +62,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="Productos y servicios" />
+            android:text="Productos y servicios"
+            android:textSize="15sp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/photo_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/fondoMenu"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_menu_photos" />
 
@@ -78,19 +85,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="Fotos" />
+            android:text="Fotos"
+            android:textSize="15sp" />
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/route_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/fondoMenu"
         android:orientation="horizontal"
-        android:padding="16dp">
+        android:padding="10dp">
 
         <ImageView
-            android:layout_width="35dp"
-            android:layout_height="40dp"
+            android:layout_width="25dp"
+            android:layout_height="30dp"
             android:layout_marginRight="16dp"
             android:src="@mipmap/ic_menu_direcction" />
 
@@ -98,7 +108,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="Trazar ruta" />
+            android:text="Trazar ruta"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

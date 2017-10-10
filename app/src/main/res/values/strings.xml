@@ -21,4 +21,10 @@
     <string name="action_about">action_about</string>
     <string name="action_settings">action_settings</string>
     <string name="atras">retroceder</string>
+    <string name="op_galery">Fotos</string>
+    <string name="op_chat">Chat</string>
+    <string name="op_reportar">Reportar</string>
+    <string name="op_favoritos">Favoritos</string>
+    <string name="op_perfil">mi cuenta</string>
+    <string name="op_closeapp">Cerrar</string>
 </resources>

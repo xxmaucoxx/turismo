@@ -15,7 +15,7 @@ public class Point {
     public Point() {
 
     }
-    public Point(String categoryStore, String closeStore, String descriptionStore, String imgPortada, String imgProfile, String nameStore, String openStore) {
+    public Point(String categoryStore, String closeStore, String descriptionStore, String imgPortada, String imgProfile, String nameStore, String openStore, String page) {
         this.categoryStore = categoryStore;
         this.closeStore = closeStore;
         this.descriptionStore = descriptionStore;
@@ -23,6 +23,7 @@ public class Point {
         this.imgProfile = imgProfile;
         this.nameStore = nameStore;
         this.openStore = openStore;
+
 
     }
 

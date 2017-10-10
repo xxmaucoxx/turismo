@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -78,9 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.mapItem) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, mapaFragment).commit();
-                } else if (item.getItemId() == R.id.profileItem) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.fragmentContainer, perfilFragment).commit();
                 }else if (item.getItemId() == R.id.homeItem) {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
@@ -106,5 +104,32 @@ public class MainActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         LoginManager.getInstance().logOut();
         goLoginScreen();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_navigation_top, menu);
+        // Action View
+        //MenuItem searchItem = menu.findItem(R.id.action_search);
+        //SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        // Configure the search info and add any event listeners
+        //return super.onCreateOptionsMenu(menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        //handle presses on the action bar items
+        switch (item.getItemId()) {
+
+            case R.id.btn_buscar:
+                startActivity(new Intent(this, MainActivity.class ));
+                return true;
+
+            case R.id.btn_filtrar:
+                startActivity(new Intent(this, MainActivity.class));
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

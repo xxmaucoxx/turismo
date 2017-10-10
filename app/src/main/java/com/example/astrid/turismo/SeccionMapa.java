@@ -1,11 +1,10 @@
 package com.example.astrid.turismo;
 
 
-import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -39,9 +38,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -140,6 +139,21 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
         MapsInitializer.initialize(getContext());
 
         nGoogleMap = googleMap;
+
+
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            boolean success = nGoogleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            getContext(), R.raw.mapstyle));
+
+            if (!success) {
+                Log.e("MapsActivityRaw", "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e("MapsActivityRaw", "Can't find style.", e);
+        }
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
         googleMap.addMarker(new MarkerOptions().position(new LatLng(40.689247, -74.044502)));
@@ -267,6 +281,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
 
         txt_nameStore = (TextView) bottomSheetView.findViewById(R.id.menu_nameStore);
 
+
         txt_nameStore.setText(marks.get(indice).getNameStore());
 
         LinearLayout openStore = (LinearLayout) bottomSheetDialog.findViewById(R.id.open_store);
@@ -288,17 +303,24 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             }
         });
 
-
         productStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Ver servicios");
+
+                Intent intent=new Intent(getContext(), StoreProduct.class);
+                intent.putExtra("Tienda", marks.get(indice).getNameStore());
+                intent.putExtra("Key", marks.get(indice).getKey());
+                startActivity(intent);
             }
         });
         photoStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("Ver fotos");
+
+                Intent intent=new Intent(getContext(), StoreGalery.class);
+                intent.putExtra("Tienda", marks.get(indice).getNameStore());
+                intent.putExtra("Key", marks.get(indice).getKey());
+                startActivity(intent);
             }
         });
         routeStore.setOnClickListener(new View.OnClickListener() {

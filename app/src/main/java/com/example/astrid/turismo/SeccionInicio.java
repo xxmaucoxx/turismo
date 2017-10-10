@@ -1,7 +1,6 @@
 package com.example.astrid.turismo;
 
-import android.content.Context;
-import android.net.Uri;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.astrid.turismo.adaptadores.AdapterPost;
 import com.example.astrid.turismo.models.Post;
@@ -23,7 +21,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.Objects;
 
@@ -111,6 +109,7 @@ public class SeccionInicio extends Fragment {
         });
         return vista;
     }
+
     private void obtenerDatos() {
 
         passkey = lastkey;

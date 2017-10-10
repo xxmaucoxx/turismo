@@ -2,6 +2,7 @@ package com.example.astrid.turismo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,33 +11,40 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.astrid.turismo.adaptadores.ListaPokemonAdapter;
-import com.example.astrid.turismo.api.PokeapiService;
-import com.example.astrid.turismo.models.Pokemon;
-import com.example.astrid.turismo.models.PokemonRespuesta;
+import com.example.astrid.turismo.adaptadores.AdapterPost;
+import com.example.astrid.turismo.adaptadores.AdapterStore;
+import com.example.astrid.turismo.models.Point;
+import com.example.astrid.turismo.models.Post;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.List;
+import java.util.Objects;
 
 
 public class SeccionStore extends Fragment {
 
-    private static final String TAG = "POKEDEX";
+    RecyclerView rv;
+    List<Point> points;
+    AdapterStore adapterStore;
+    String lastkey;
+    String passkey = null;
+    String changes = null;
+    int countArrow = 0;
 
-    private Retrofit retrofit;
+    private boolean aptoParaCargar = true;
 
-    private RecyclerView recyclerView;
 
-    private ListaPokemonAdapter listaPokemonAdapter;
+    private DatabaseReference mDatabase;
 
-    private int offset;
 
-    private boolean aptoParaCargar;
+    private static final String TAG = "Tiendas";
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,13 +53,44 @@ public class SeccionStore extends Fragment {
 
         View vista = inflater.inflate(R.layout.fragment_seccion_store, container, false);
 
-        recyclerView = (RecyclerView) vista.findViewById(R.id.recyclerView);
-        listaPokemonAdapter = new ListaPokemonAdapter(getContext());
-        recyclerView.setAdapter(listaPokemonAdapter);
-        recyclerView.setHasFixedSize(true);
-        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 3);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        rv = (RecyclerView) vista.findViewById(R.id.recyclerViewStore);
+
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        points = new ArrayList<>();
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+
+        Query postRef = ref.child("puntos/Perú/Moquegua/points").limitToFirst(5);
+
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        adapterStore = new AdapterStore(points,getContext());
+        rv.setAdapter(adapterStore);
+
+        aptoParaCargar = true;
+
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                points.removeAll(points);
+                for( DataSnapshot snapshot :
+                        dataSnapshot.getChildren()){
+                    lastkey = snapshot.getKey();
+                    Point point = snapshot.getValue(Point.class);
+                    points.add(point);
+                }
+                adapterStore.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        final GridLayoutManager layoutManager = new GridLayoutManager(getContext(), 1);
+        rv.setLayoutManager(layoutManager);
+        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -64,53 +103,55 @@ public class SeccionStore extends Fragment {
                     if (aptoParaCargar) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             Log.i(TAG, " Llegamos al final.");
-
                             aptoParaCargar = false;
-                            offset += 20;
-                            obtenerDatos(offset);
+                            obtenerDatos();
+
                         }
                     }
                 }
             }
         });
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://pokeapi.co/api/v2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        aptoParaCargar = true;
-        offset = 0;
-        obtenerDatos(offset);
 
         return vista;
     }
 
-    private void obtenerDatos(int offset) {
-        PokeapiService service = retrofit.create(PokeapiService.class);
-        Call<PokemonRespuesta> pokemonRespuestaCall = service.obtenerListaPokemon(20, offset);
+    private void obtenerDatos() {
 
-        pokemonRespuestaCall.enqueue(new Callback<PokemonRespuesta>() {
+        passkey = lastkey;
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query postRef = ref.child("puntos/Perú/Moquegua/post").orderByKey().endAt(lastkey).limitToLast(5);
+
+        aptoParaCargar = false;
+        countArrow = 0;
+        postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onResponse(Call<PokemonRespuesta> call, Response<PokemonRespuesta> response) {
-                aptoParaCargar = true;
-                if (response.isSuccessful()) {
-
-                    PokemonRespuesta pokemonRespuesta = response.body();
-                    ArrayList<Pokemon> listaPokemon = pokemonRespuesta.getResults();
-
-                    listaPokemonAdapter.adicionarListaPokemon(listaPokemon);
-
-                } else {
-                    Log.e(TAG, " onResponse: " + response.errorBody());
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for( DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if (!Objects.equals(passkey, snapshot.getKey())){
+                        Log.i(TAG, "|||| mi key : " + snapshot.getKey());
+                        adapterStore.adicionarListaPoint(snapshot.getValue(Point.class));
+                    }
+                    countArrow++;
+                    if (countArrow == 1){
+                        lastkey = snapshot.getKey();
+                    }
+                }
+                passkey = lastkey;
+                if (countArrow < 2){
+                    aptoParaCargar = false;
+                }else{
+                    aptoParaCargar = true;
                 }
             }
 
             @Override
-            public void onFailure(Call<PokemonRespuesta> call, Throwable t) {
-                aptoParaCargar = true;
-                Log.e(TAG, " onFailure: " + t.getMessage());
+            public void onCancelled(DatabaseError databaseError) {
+
             }
+
         });
+
     }
 
 }
