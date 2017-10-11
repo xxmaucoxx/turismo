@@ -1,5 +1,6 @@
 package com.example.astrid.turismo;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.astrid.turismo.adaptadores.ListaPokemonAdapter;
 import com.example.astrid.turismo.api.PokeapiService;
@@ -126,10 +129,51 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.btn_filtrar:
-                startActivity(new Intent(this, MainActivity.class));
+                selectfilter();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void selectfilter(){
+
+        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
+                MainActivity.this);
+
+// Setting Dialog Title
+        alertDialog2.setTitle("Confirm Delete...");
+
+// Setting Dialog Message
+        alertDialog2.setMessage("Are you sure you want delete this file?");
+
+// Setting Icon to Dialog
+        alertDialog2.setIcon(R.drawable.ic_home);
+
+// Setting Positive "Yes" Btn
+        alertDialog2.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog
+                        Toast.makeText(getApplicationContext(),
+                                "You clicked on YES", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                });
+
+// Setting Negative "NO" Btn
+        alertDialog2.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Write your code here to execute after dialog
+                        Toast.makeText(getApplicationContext(),
+                                "You clicked on NO", Toast.LENGTH_SHORT)
+                                .show();
+                        dialog.cancel();
+                    }
+                });
+
+// Showing Alert Dialog
+        alertDialog2.show();
+
     }
 }
