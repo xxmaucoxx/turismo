@@ -1,13 +1,123 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.astrid.turismo.SeccionMapa">
 
     <com.google.android.gms.maps.MapView
+        android:id="@+id/mapId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mapId"
-        />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:elevation="1dp" />
+
+    <LinearLayout
+        android:layout_width="120dp"
+        android:layout_height="wrap_content">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/yo_location_me"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/com_facebook_button_send_background_color"
+            fab:fab_colorPressed="@color/com_facebook_button_send_background_color"
+            fab:fab_icon="@mipmap/ic_me_location"
+            fab:fab_size="normal"
+            fab:fab_title="Locate Store" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="4dp"
+        android:gravity="right">
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/fab_menu"
+            android:layout_width="match_parent"
+            android:layout_height="227dp"
+            android:layout_gravity="end|top"
+            android:addStatesFromChildren="false"
+            android:elevation="2dp"
+            android:paddingTop="0dp"
+            fab:fab_addButtonColorNormal="#C0007D"
+            fab:fab_addButtonColorPressed="#C0007D"
+            fab:fab_addButtonSize="mini"
+            fab:fab_addButtonStrokeVisible="true"
+            fab:fab_icon="@drawable/ic_clima"
+            fab:fab_labelsPosition="left">
+
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/map_dia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/com_facebook_button_background_color_disabled"
+                fab:fab_colorPressed="@color/com_facebook_button_background_color_disabled"
+                fab:fab_icon="@drawable/ic_c_normal"
+                fab:fab_size="mini"
+                fab:fab_title="Locate Store" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/map_medio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="@color/colorPrimary"
+                fab:fab_colorPressed="@color/colorPrimary"
+                fab:fab_icon="@drawable/ic_c_medium"
+                fab:fab_size="mini"
+                fab:fab_title="Locate Store" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/map_noche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fab:fab_colorNormal="#4a148c"
+                fab:fab_colorPressed="#4a148c"
+                fab:fab_icon="@mipmap/ic_mon"
+                fab:fab_size="mini"
+                fab:fab_title="Locate Store" />
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/mapId"
+        android:elevation="3dp"
+        android:gravity="center_horizontal"
+        android:layout_alignParentStart="true">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/zoom_mas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorPrimaryDark"
+            fab:fab_colorPressed="#C0007D"
+            fab:fab_icon="@mipmap/ic_zoom_mas"
+            fab:fab_size="mini"
+            fab:fab_title="Locate Store" />
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/zoom_menos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/colorPrimaryDark"
+            fab:fab_colorPressed="#C0007D"
+            fab:fab_icon="@mipmap/ic_zoom_menos"
+            fab:fab_size="mini"
+            fab:fab_title="Locate Store" />
+
+    </LinearLayout>
+
+
+
+
 
 </RelativeLayout>

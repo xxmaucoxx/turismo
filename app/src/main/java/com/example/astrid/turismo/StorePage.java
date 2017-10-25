@@ -2,6 +2,7 @@ package com.example.astrid.turismo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -14,9 +15,11 @@ import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -25,6 +28,7 @@ import com.example.astrid.turismo.models.Point;
 import com.example.astrid.turismo.models.Post;
 import com.example.astrid.turismo.models.Site;
 import com.example.astrid.turismo.models.Social;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -51,14 +55,11 @@ public class StorePage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_store_page);
 
+
         socials = new ArrayList<>();
         sites = new ArrayList<>();
 
         Bundle parametros = this.getIntent().getExtras();
-
-        TextView txt_nameStore;
-        TextView txt_key;
-
 
         String valor = parametros.getString("Tienda");
         String key = parametros.getString("Key");
@@ -66,26 +67,30 @@ public class StorePage extends AppCompatActivity {
 
         setTitle(valor);
 
+        Log.i(TAG, "Me llego : " + valor + " y "+ key );
 
+        String ruta = "usuarios/" + key + "/empresa";
+
+        Log.i(TAG, "------------------ > consulta : " +  ruta);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        Query postRef = ref.child("usuarios/" + key + "/empresa");
-
+        Query postRef = ref.child(ruta);
 
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Page data = dataSnapshot.getValue(Page.class);
+
+                Log.i(TAG, data.getNameStore());
 
                 TextView txt_name_store;
                 TextView txt_category_store;
                 TextView txt_description_store;
                 TextView txt_open_store;
                 TextView txt_close_store;
-                TextView txt_page_store;
                 ImageView img_portada;
                 ImageView img_profile;
+
 
                 txt_name_store = (TextView) findViewById(R.id.txt_name_store);
                 txt_name_store.setText(data.getNameStore());
@@ -140,10 +145,31 @@ public class StorePage extends AppCompatActivity {
                 for (DataSnapshot red : dataSnapshot.child("social").getChildren()) {
                     Social dsocial = red.getValue(Social.class);
                     socials.add(dsocial);
+
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.info);
+
+                    TextView valueTV = new TextView(getApplicationContext());
+                    valueTV.setText("hallo hallo");
+                    valueTV.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                    ((LinearLayout) layout ).addView(valueTV);
                 }
                 for (DataSnapshot  direccion : dataSnapshot.child("ubicacion").getChildren()) {
                     Site ubicacion = direccion.getValue(Site.class);
                     sites.add(ubicacion);
+
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.redes);
+
+                    TextView valueTV = new TextView(getApplicationContext());
+                    valueTV.setText(ubicacion.getDireccion());
+                    valueTV.setTextColor(Color.parseColor("#FFFFFF"));
+                    valueTV.setLayoutParams(new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT));
+
+                    ((LinearLayout) layout ).addView(valueTV);
                 }
             }
 

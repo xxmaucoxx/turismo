@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
@@ -15,20 +16,28 @@ import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.example.astrid.turismo.models.Item;
 import com.example.astrid.turismo.models.Mark;
 import com.example.astrid.turismo.dialogs.MyDialogFragment;
 import com.example.astrid.turismo.models.Point;
 import com.example.astrid.turismo.models.Site;
 import com.example.astrid.turismo.route.DataParser;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -82,6 +91,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
 
     // Puntos y marcadores
     List<Mark> marks;
+    List<Marker> markers;
 
     private static final String TAG = "MyActivity";
 
@@ -104,6 +114,80 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_seccion_mapa, container, false);
 
+        FloatingActionButton fab1 = (FloatingActionButton) mView.findViewById(R.id.zoom_mas);
+        FloatingActionButton fab2 = (FloatingActionButton) mView.findViewById(R.id.zoom_menos);
+
+        FloatingActionButton Mdefault = (FloatingActionButton) mView.findViewById(R.id.map_medio);
+        FloatingActionButton Mdia = (FloatingActionButton) mView.findViewById(R.id.map_dia);
+        FloatingActionButton Mnoche = (FloatingActionButton) mView.findViewById(R.id.map_noche);
+
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(nGoogleMap.getCameraPosition().zoom + 0.5f));
+            }
+        });
+        fab2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                nGoogleMap.animateCamera(CameraUpdateFactory.zoomTo(nGoogleMap.getCameraPosition().zoom - 0.5f));
+            }
+        });
+
+        Mdefault.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Customise the styling of the base map using a JSON object defined
+                    // in a raw resource file.
+                    boolean success = nGoogleMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(
+                                    getContext(), R.raw.dia));
+
+                    if (!success) {
+                        Log.e("MapsActivityRaw", "Style parsing failed.");
+                    }
+                } catch (Resources.NotFoundException e) {
+                    Log.e("MapsActivityRaw", "Can't find style.", e);
+                }
+            }
+        });
+        Mdia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    // Customise the styling of the base map using a JSON object defined
+                    // in a raw resource file.
+                    boolean success = nGoogleMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(
+                                    getContext(), R.raw.mapstyle));
+
+                    if (!success) {
+                        Log.e("MapsActivityRaw", "Style parsing failed.");
+                    }
+                } catch (Resources.NotFoundException e) {
+                    Log.e("MapsActivityRaw", "Can't find style.", e);
+                }
+            }
+        });
+        Mnoche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    boolean success = nGoogleMap.setMapStyle(
+                            MapStyleOptions.loadRawResourceStyle(
+                                    getContext(), R.raw.noche));
+
+                    if (!success) {
+                        Log.e("MapsActivityRaw", "Style parsing failed.");
+                    }
+                } catch (Resources.NotFoundException e) {
+                    Log.e("MapsActivityRaw", "Can't find style.", e);
+                }
+            }
+        });
         return mView;
     }
 
@@ -119,6 +203,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             mMapView.getMapAsync(this);
         }
         marks = new ArrayList<>();
+        markers = new ArrayList<>();
 
     }
     private void printMarker() {
@@ -128,11 +213,18 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             double lat = Double.parseDouble(mark.getLatitud());
             double lng = Double.parseDouble(mark.getLongitud());
             LatLng coordenadas = new LatLng(lat, lng);
-            ubicacion = nGoogleMap.addMarker(new MarkerOptions()
-                    .position(coordenadas));
+            Marker ubicacion = nGoogleMap.addMarker(new MarkerOptions()
+                    .position(coordenadas)
+                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_mrest)));
             ubicacion.setTag("store-"+countID);
+            markers.add(ubicacion);
         }
-
+    }
+    public void filtrar(List<Item> lista) {
+        int countID = -1;
+        for (Item dt : lista) {
+            Log.i(TAG ,"-------------------->> Categorias selecionadas son : " + dt.getTitle());
+        }
     }
     public void onMapReady(GoogleMap googleMap) {
 
@@ -273,6 +365,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
     public void openMenu(final int indice) {
 
         TextView txt_nameStore;
+        final ImageView img_profile;
 
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
         View bottomSheetView = getActivity().getLayoutInflater().inflate(R.layout.list_menu_map, null);
@@ -280,9 +373,19 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
 
 
         txt_nameStore = (TextView) bottomSheetView.findViewById(R.id.menu_nameStore);
+        img_profile = (ImageView) bottomSheetView.findViewById(R.id.img_m_profile);
 
 
         txt_nameStore.setText(marks.get(indice).getNameStore());
+        Glide.with(getContext()).load(marks.get(indice).getImgProfile()).asBitmap().centerCrop().into(new BitmapImageViewTarget(img_profile) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                img_profile.setImageDrawable(circularBitmapDrawable);
+            }
+        });
 
         LinearLayout openStore = (LinearLayout) bottomSheetDialog.findViewById(R.id.open_store);
         LinearLayout productStore = (LinearLayout) bottomSheetDialog.findViewById(R.id.service_store);

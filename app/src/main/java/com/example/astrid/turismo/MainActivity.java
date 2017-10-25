@@ -1,8 +1,10 @@
 package com.example.astrid.turismo;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,11 +19,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.astrid.turismo.adaptadores.DialogMultipleChoiceAdapter;
 import com.example.astrid.turismo.adaptadores.ListaPokemonAdapter;
 import com.example.astrid.turismo.api.PokeapiService;
+import com.example.astrid.turismo.models.Item;
 import com.example.astrid.turismo.models.Pokemon;
 import com.example.astrid.turismo.models.PokemonRespuesta;
 import com.facebook.login.LoginManager;
@@ -29,6 +34,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomNavigationView bottomNavigationView;
 
+    List<Item> itemList = new ArrayList<>();
 
+    private static final String TAG = "Tiendas";
 
 
     @Override
@@ -129,51 +137,54 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.btn_filtrar:
-                selectfilter();
+                show();
                 return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-    public void selectfilter(){
+    public void show() {
+        if (itemList.isEmpty()) {
+            itemList.add(new Item("Restaurantes", R.mipmap.ic_launcher));
+            itemList.add(new Item("Hoteles", R.mipmap.ic_launcher_round));
+            itemList.add(new Item("Entretenimiento", R.mipmap.ic_menu_direcction));
+            itemList.add(new Item("Servicios", R.mipmap.ic_menu_photos));
+            itemList.add(new Item("Cines", R.mipmap.ic_menu_play));
+            itemList.add(new Item("Parques", R.mipmap.ic_menu_store));
+            itemList.add(new Item("Instituciones", R.mipmap.ic_astrid));
+        }
 
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(
-                MainActivity.this);
+        final DialogMultipleChoiceAdapter adapter =
+                new DialogMultipleChoiceAdapter(this, itemList);
 
-// Setting Dialog Title
-        alertDialog2.setTitle("Confirm Delete...");
+        new AlertDialog.Builder(this).setTitle("¿ Que buscas ?")
+                .setAdapter(adapter, null)
+                .setIcon(R.drawable.ic_map)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-// Setting Dialog Message
-        alertDialog2.setMessage("Are you sure you want delete this file?");
 
-// Setting Icon to Dialog
-        alertDialog2.setIcon(R.drawable.ic_home);
 
-// Setting Positive "Yes" Btn
-        alertDialog2.setPositiveButton("YES",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
                         Toast.makeText(getApplicationContext(),
-                                "You clicked on YES", Toast.LENGTH_SHORT)
-                                .show();
+                                "getCheckedItem = " + adapter.getCheckedItem().size(),
+                                Toast.LENGTH_SHORT).show();
+                        Log.i(TAG, "lista de los cheados" + adapter.getCheckedItem());
+
+
+                        SeccionMapa sm = new SeccionMapa(getApplicationContext());
+                        sm.filtrar(adapter.getCheckedItem());
+
+
+
                     }
-                });
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
 
-// Setting Negative "NO" Btn
-        alertDialog2.setNegativeButton("NO",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Write your code here to execute after dialog
-                        Toast.makeText(getApplicationContext(),
-                                "You clicked on NO", Toast.LENGTH_SHORT)
-                                .show();
-                        dialog.cancel();
                     }
-                });
-
-// Showing Alert Dialog
-        alertDialog2.show();
-
+                })
+                .show();
     }
 }

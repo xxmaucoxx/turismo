@@ -40,6 +40,7 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="8dp"
                     android:text="titulo"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 

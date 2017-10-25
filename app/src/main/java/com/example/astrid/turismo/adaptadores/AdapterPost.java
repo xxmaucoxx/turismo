@@ -1,6 +1,7 @@
 package com.example.astrid.turismo.adaptadores;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
@@ -10,16 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.astrid.turismo.R;
+import com.example.astrid.turismo.StorePage;
 import com.example.astrid.turismo.models.Post;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 
-public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHolder>{
+public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHolder> {
 
     List<Post> posts;
     private Context context;
@@ -34,7 +38,7 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
     @Override
     public PostViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_post,parent,false);
-        PostViewHolder holder = new PostViewHolder(v);
+        PostViewHolder holder = new PostViewHolder(v,this.context,posts);
         return holder;
     }
 
@@ -78,21 +82,41 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
         notifyDataSetChanged();
     }
 
-    public static class PostViewHolder extends RecyclerView.ViewHolder{
+
+
+    public static class PostViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView txt_name;
         ImageView img_post;
         ImageView img_store;
         TextView txt_update;
         TextView txt_contenido;
+        List<Post> posts = new ArrayList();
+        Context ctx;
 
-        public PostViewHolder(View itemView) {
+        public PostViewHolder(View itemView, Context ctx, List<Post> posts) {
             super(itemView);
+            this.posts = posts;
+            this.ctx = ctx;
+
             txt_name = (TextView) itemView.findViewById(R.id.txt_name);
             txt_update = (TextView) itemView.findViewById(R.id.txt_update);
             txt_contenido = (TextView) itemView.findViewById(R.id.txt_contenido);
             img_post = (ImageView) itemView.findViewById(R.id.img_post);
             img_store = (ImageView) itemView.findViewById(R.id.img_store);
+
+            txt_name.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Post post = this.posts.get(position);
+            Intent intent=new Intent(this.ctx, StorePage.class);
+            intent.putExtra("Tienda", posts.get(position).getName());
+            intent.putExtra("Key", posts.get(position).getIdStore());
+            ctx.startActivity(intent);
+
         }
     }
 

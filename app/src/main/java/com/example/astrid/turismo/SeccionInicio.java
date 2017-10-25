@@ -65,6 +65,8 @@ public class SeccionInicio extends Fragment {
 
         aptoParaCargar = true;
 
+
+
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -73,8 +75,8 @@ public class SeccionInicio extends Fragment {
                         dataSnapshot.getChildren()){
                     lastkey = snapshot.getKey();
                     Post post = snapshot.getValue(Post.class);
-                    Log.i(TAG,post.getName());
-                    posts.add(post);
+                    Post real = new Post(lastkey,post.getName(),post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(), post.getIdStore());
+                    posts.add(real);
                 }
                 adapterPost.notifyDataSetChanged();
             }
@@ -124,8 +126,10 @@ public class SeccionInicio extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for( DataSnapshot snapshot : dataSnapshot.getChildren()){
                     if (!Objects.equals(passkey, snapshot.getKey())){
-                        Log.i(TAG, "|||| mi key : " + snapshot.getKey());
-                        adapterPost.adicionarListaPost(snapshot.getValue(Post.class));
+                        Post post = snapshot.getValue(Post.class);
+                        Log.i(TAG,"||||||||||||||||||||| De lo capturado retorno : " +post.getIdStore());
+                        Post real = new Post(lastkey,post.getName(),post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(),post.getIdStore());
+                        adapterPost.adicionarListaPost(real);
                     }
                     countArrow++;
                     if (countArrow == 1){

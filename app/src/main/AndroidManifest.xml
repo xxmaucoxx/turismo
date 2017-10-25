@@ -27,9 +27,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyAjphpLNG1cCRcI-4nBT9LAsWS_4l0S4Ds" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"/>
 
-        </activity>
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".StorePage"
@@ -59,6 +58,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider android:authorities="com.facebook.app.FacebookContentProvider1956352954612641"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true"/>
     </application>
 
 </manifest>

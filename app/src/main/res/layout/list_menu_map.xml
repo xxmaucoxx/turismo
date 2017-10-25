@@ -2,22 +2,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/edit_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/fondoMenu"
-        android:orientation="horizontal"
+        android:layout_height="150dp"
+        android:background="@drawable/bitmap3"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/img_m_profile"
+            android:layout_width="95dp"
+            android:layout_height="90dp"
+            android:paddingTop="0dp" />
 
         <TextView
             android:id="@+id/menu_nameStore"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center_horizontal"
+            android:paddingTop="8dp"
             android:text="Nombre la Tienda"
-            android:textSize="24sp" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -25,7 +36,7 @@
         android:id="@+id/open_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/fondoMenu"
+        android:background="@color/cardview_light_background"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -48,7 +59,7 @@
         android:id="@+id/service_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/fondoMenu"
+        android:background="@color/cardview_light_background"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -71,7 +82,7 @@
         android:id="@+id/photo_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/fondoMenu"
+        android:background="@color/cardview_light_background"
         android:orientation="horizontal"
         android:padding="10dp">
 
@@ -94,7 +105,7 @@
         android:id="@+id/route_store"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/fondoMenu"
+        android:background="@color/cardview_light_background"
         android:orientation="horizontal"
         android:padding="10dp">
 

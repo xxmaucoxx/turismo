@@ -46,6 +46,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-maps:10.2.6'
     compile 'com.android.support:gridlayout-v7:25.3.1'
     compile 'com.airbnb.android:lottie:1.5.3'
+    compile 'com.getbase:floatingactionbutton:1.10.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
