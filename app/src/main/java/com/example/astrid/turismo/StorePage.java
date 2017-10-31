@@ -2,13 +2,20 @@ package com.example.astrid.turismo;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintJob;
 import android.print.PrintManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -20,6 +27,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,7 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class StorePage extends AppCompatActivity {
+public class StorePage extends AppCompatActivity{
 
     private static final String TAG = "hola";
     List<Social> socials;
@@ -98,9 +106,6 @@ public class StorePage extends AppCompatActivity {
                 txt_category_store = (TextView) findViewById(R.id.txt_category_store);
                 txt_category_store.setText(data.getCategoryStore());
 
-                txt_description_store = (TextView) findViewById(R.id.txt_description_store);
-                txt_description_store.setText(data.getDescriptionStore());
-
 
 
                 txt_open_store = (TextView) findViewById(R.id.txt_open_store);
@@ -116,11 +121,6 @@ public class StorePage extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-                WebView webview = (WebView) findViewById(R.id.txt_page_store);
-                String contenido = data.getPage();
-                if (contenido != null){
-                    webview.loadDataWithBaseURL(null, contenido, "text/HTML", "UTF-8", null);
-                }
 
                 String urlPortada = data.getImgPortada();
                 img_portada = (ImageView) findViewById(R.id.img_portada);
@@ -146,30 +146,11 @@ public class StorePage extends AppCompatActivity {
                     Social dsocial = red.getValue(Social.class);
                     socials.add(dsocial);
 
-                    LinearLayout layout = (LinearLayout) findViewById(R.id.info);
-
-                    TextView valueTV = new TextView(getApplicationContext());
-                    valueTV.setText("hallo hallo");
-                    valueTV.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    ((LinearLayout) layout ).addView(valueTV);
                 }
                 for (DataSnapshot  direccion : dataSnapshot.child("ubicacion").getChildren()) {
                     Site ubicacion = direccion.getValue(Site.class);
                     sites.add(ubicacion);
 
-                    LinearLayout layout = (LinearLayout) findViewById(R.id.redes);
-
-                    TextView valueTV = new TextView(getApplicationContext());
-                    valueTV.setText(ubicacion.getDireccion());
-                    valueTV.setTextColor(Color.parseColor("#FFFFFF"));
-                    valueTV.setLayoutParams(new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.WRAP_CONTENT,
-                            LinearLayout.LayoutParams.WRAP_CONTENT));
-
-                    ((LinearLayout) layout ).addView(valueTV);
                 }
             }
 
@@ -180,8 +161,64 @@ public class StorePage extends AppCompatActivity {
 
         });
 
+        Resources res = getResources();
+
+        Bundle args = new Bundle();
+        args.putString("textFromActivityB", key);
+        final Fragment infoFragment = new PageFragmentInfo();
+        final Fragment storeFragment = new PageFragmentNoticia();
+        final Fragment productFragment = new PageFragmentProducto();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        infoFragment.setArguments(args);
+        storeFragment.setArguments(args);
+        productFragment.setArguments(args);
+
+
+
+
+        TabHost tabs = (TabHost)findViewById(android.R.id.tabhost);
+        tabs.setup();
+
+
+        // ---------------- > Codigo para el TAB 1 !!
+
+
+        TabHost.TabSpec spec=tabs.newTabSpec("mitab1");
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.add1, storeFragment).commit();
+        spec.setContent(R.id.tab1);
+        spec.setIndicator("",
+                res.getDrawable(R.drawable.ic_activity));
+        tabs.addTab(spec);
+
+        // --------------------------------------------- > Codigo para el TAB 1 !!
+
+        spec=tabs.newTabSpec("mitab2");
+        FragmentTransaction fragmentTransaction2 = fragmentManager.beginTransaction();
+        fragmentTransaction2.replace(R.id.add2, infoFragment).commit();
+        spec.setContent(R.id.tab2);
+        spec.setIndicator("",
+                res.getDrawable(R.drawable.ic_store));
+        tabs.addTab(spec);
+
+        // -------------------------------------------- > Codigo para el TAB 1 !!
+
+        spec=tabs.newTabSpec("mitab3");
+        FragmentTransaction fragmentTransaction3 = fragmentManager.beginTransaction();
+        fragmentTransaction3.replace(R.id.add3, productFragment).commit();
+        spec.setContent(R.id.tab3);
+        spec.setIndicator("",
+                res.getDrawable(R.drawable.ic_game));
+        tabs.addTab(spec);
+
+
+
+        tabs.setCurrentTab(0);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_store_page, menu);
@@ -192,6 +229,7 @@ public class StorePage extends AppCompatActivity {
         //return super.onCreateOptionsMenu(menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

@@ -90,8 +90,9 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
 
 
     // Puntos y marcadores
-    List<Mark> marks;
-    List<Marker> markers;
+    List<Mark>  marks = new ArrayList<>();;
+    List<Marker> markers = new ArrayList<>();
+
 
     private static final String TAG = "MyActivity";
 
@@ -202,8 +203,6 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             mMapView.onResume();
             mMapView.getMapAsync(this);
         }
-        marks = new ArrayList<>();
-        markers = new ArrayList<>();
 
     }
     private void printMarker() {
@@ -221,9 +220,15 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
         }
     }
     public void filtrar(List<Item> lista) {
-        int countID = -1;
+        int countID = 0;
+        getData();
+        Log.i(TAG,"numero de marcadores" + markers.size());
         for (Item dt : lista) {
             Log.i(TAG ,"-------------------->> Categorias selecionadas son : " + dt.getTitle());
+            for (Marker punto : markers) {
+                Log.i(TAG, "contador" +countID );
+
+            }
         }
     }
     public void onMapReady(GoogleMap googleMap) {

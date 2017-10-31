@@ -137,86 +137,77 @@
                     android:text="hora"
                     android:textColor="@color/cardview_light_background"
                     android:textSize="12sp" />
-
             </LinearLayout>
         </LinearLayout>
 
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="100dp"
             android:paddingBottom="10dp"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <TabHost android:id="@android:id/tabhost"
                 android:layout_width="match_parent"
-                android:layout_height="700dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/txt_description_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:paddingBottom="10dp"
-                    android:paddingRight="15dp"
-                    android:text="Descripcion Basica"
-                    android:textColor="@color/com_facebook_button_background_color_focused_disabled"
-                    android:textSize="17sp" />
-
-                <WebView
-                    android:id="@+id/txt_page_store"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="15dp"
-                    android:padding="15dp" />
+                android:layout_height="match_parent">
 
                 <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/colorPrimaryDark"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:layout_height="match_parent" >
 
-                    <LinearLayout
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@mipmap/ic_me_location">
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/redes"
-                        android:layout_width="wrap_content"
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:background="@color/cardview_shadow_end_color"
+                        android:theme="@style/AlertDialog.AppCompat.Light" />
 
-                        <TextView
+                    <FrameLayout android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@android:id/tabcontent" >
+
+                        <LinearLayout android:id="@+id/tab1"
+                            android:orientation="vertical"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:text="Encuentranos en :"
-                            android:textColor="@color/blanco"
-                            android:textSize="14sp" />
+                            android:layout_height="match_parent">
 
+                            <FrameLayout
+                                android:id="@+id/add1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
 
-                    </LinearLayout>
+                            </FrameLayout>
+                        </LinearLayout>
 
+                        <LinearLayout android:id="@+id/tab2"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
+                            <FrameLayout
+                                android:id="@+id/add2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </LinearLayout>
+                        <LinearLayout android:id="@+id/tab3"
+                            android:orientation="vertical"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" >
 
+                            <FrameLayout
+                                android:id="@+id/add3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+                    </FrameLayout>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"></LinearLayout>
-
-            </LinearLayout>
+            </TabHost>
 
 
-        </ScrollView>
+        </LinearLayout>
 
     </android.support.v7.widget.GridLayout>
 
