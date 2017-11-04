@@ -20,7 +20,7 @@
 
     <item
         android:id="@+id/option_perfil"
-        android:title="@string/op_perfil"
+        android:title="@string/mi_cuenta"
         app:showAsAction="never" />
 
     <item

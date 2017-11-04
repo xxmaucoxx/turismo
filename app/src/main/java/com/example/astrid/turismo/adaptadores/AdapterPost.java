@@ -61,7 +61,7 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
                 .into(holder.img_store);
 
         if (!Objects.equals(url, "")){
-
+            Log.i(TAG, url);
             ViewGroup.LayoutParams params = holder.img_post.getLayoutParams();
             params.height = 320;
             holder.img_post.setLayoutParams(params);

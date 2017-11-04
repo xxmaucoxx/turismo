@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         //handle presses on the action bar items
+        final Fragment profileFragment = new SeccionPerfil();
         switch (item.getItemId()) {
 
             case R.id.btn_buscar:
@@ -138,6 +139,11 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.btn_filtrar:
                 show();
+                return true;
+            case R.id.option_perfil:
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentContainer, profileFragment).commit();
                 return true;
         }
 
