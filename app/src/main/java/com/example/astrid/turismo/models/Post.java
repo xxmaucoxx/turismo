@@ -8,7 +8,7 @@ public class Post {
     private String closeStore;
     private String openStore;
     private String img;
-    private double upfecha;
+    private String upfecha;
     private String imgPost;
     private String decripcion;
     private String idStore;
@@ -17,7 +17,7 @@ public class Post {
         
     }
 
-    public Post(String key, String name, String categoryStore, String closeStore, String openStore, String img, double upfecha, String imgPost, String decripcion, String idStore) {
+    public Post(String key, String name, String categoryStore, String closeStore, String openStore, String img, String upfecha, String imgPost, String decripcion, String idStore) {
         this.key = key;
         this.name = name;
         this.categoryStore = categoryStore;
@@ -62,11 +62,11 @@ public class Post {
         this.openStore = openStore;
     }
 
-    public double getUpfecha() {
+    public String getUpfecha() {
         return upfecha;
     }
 
-    public void setUpfecha(double upfecha) {
+    public void setUpfecha(String upfecha) {
         this.upfecha = upfecha;
     }
 

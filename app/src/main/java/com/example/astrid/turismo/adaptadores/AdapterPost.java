@@ -85,29 +85,24 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
         notifyDataSetChanged();
     }
 
-    public String getDate( Double date ) {
+    public String getDate( String date ) {
 
-        String timeAgo;
+        String timeAgo = "";
+        
 
-        date = date * 1000;
-        Long dateLong = date.longValue();
+        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        System.out.println(dateLong);
-
-
-        /*SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
         try {
             Date d = f.parse(date);
-            long milliseconds = d.getTime();*/
-
+            long dateLong = d.getTime();
 
             timeAgo = getTimeAgo(dateLong);
             System.out.println(timeAgo);
-        /*
+        
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        */
+
         return timeAgo;
     }
 
@@ -134,7 +129,7 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
 
 
     public static String getTimeAgo(long time) {
-        System.out.println(time);
+
         if (time < 1000000000000L) {
             // if timestamp given in seconds, convert to millis
             time *= 1000;
@@ -151,19 +146,19 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
 
         System.out.println(diff);
         if (diff < MINUTE_MILLIS) {
-            return "just now";
+            return "justo ahora";
         } else if (diff < 2 * MINUTE_MILLIS) {
-            return "a minute ago";
+            return "hace un minuto";
         } else if (diff < 50 * MINUTE_MILLIS) {
-            return diff / MINUTE_MILLIS + " minutes ago";
+            return "hace " + diff / MINUTE_MILLIS + " minutos";
         } else if (diff < 90 * MINUTE_MILLIS) {
-            return "an hour ago";
+            return "hace una hora";
         } else if (diff < 24 * HOUR_MILLIS) {
-            return diff / HOUR_MILLIS + " hours ago";
+            return "hace " + diff / HOUR_MILLIS + " horas";
         } else if (diff < 48 * HOUR_MILLIS) {
-            return "yesterday";
+            return "ayer";
         } else {
-            return diff / DAY_MILLIS + " days ago";
+            return "hace " + diff / DAY_MILLIS + " días";
         }
     }
 
