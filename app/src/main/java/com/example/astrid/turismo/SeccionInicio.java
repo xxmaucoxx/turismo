@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.astrid.turismo.adaptadores.AdapterPost;
+import com.example.astrid.turismo.models.Item;
 import com.example.astrid.turismo.models.Post;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,13 +39,19 @@ public class SeccionInicio extends Fragment {
     private boolean aptoParaCargar = true;
     private static final String TAG = "MyActivity";
 
+    List<Item> categorias = new ArrayList<>();
+
     private DatabaseReference mDatabase;
 
-    //puntos/Perú/Moquegua/post
+    public SeccionInicio(List<Item> cats) {
+        super();
+        this.categorias = cats;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View vista = inflater.inflate(R.layout.fragment_seccion_inicio, container, false);
 

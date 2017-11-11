@@ -61,7 +61,7 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
                 .into(holder.img_store);
 
         if (!Objects.equals(url, "")){
-            Log.i(TAG, url);
+            //Log.i(TAG, url);
             ViewGroup.LayoutParams params = holder.img_post.getLayoutParams();
             params.height = 320;
             holder.img_post.setLayoutParams(params);
@@ -92,15 +92,17 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
 
         SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-        try {
-            Date d = f.parse(date);
-            long dateLong = d.getTime();
+        if (date != null){
+            try {
+                Date d = f.parse(date);
+                long dateLong = d.getTime();
 
-            timeAgo = getTimeAgo(dateLong);
-            System.out.println(timeAgo);
-        
-        } catch (ParseException e) {
-            e.printStackTrace();
+                timeAgo = getTimeAgo(dateLong);
+                System.out.println(timeAgo);
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
         return timeAgo;

@@ -52,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
 
     List<Item> itemList = new ArrayList<>();
 
+    String fragment;
+
     private static final String TAG = "Tiendas";
 
 
@@ -61,10 +63,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final Fragment perfilFragment = new SeccionPerfil();
-        final Fragment mapaFragment = new SeccionMapa(getApplicationContext());
-        final Fragment storeFragment = new SeccionStore();
-        final Fragment homeFragment = new SeccionInicio();
+        if (itemList.isEmpty()) {
+            itemList.add(new Item("Restaurantes", R.mipmap.ic_launcher));
+            itemList.add(new Item("Hoteles", R.mipmap.ic_launcher_round));
+            itemList.add(new Item("Entretenimiento", R.mipmap.ic_menu_direcction));
+            itemList.add(new Item("Servicios", R.mipmap.ic_menu_photos));
+            itemList.add(new Item("Cines", R.mipmap.ic_menu_play));
+            itemList.add(new Item("Parques", R.mipmap.ic_menu_store));
+            itemList.add(new Item("Instituciones", R.mipmap.ic_astrid));
+        }
+
+        final Fragment mapaFragment = new SeccionMapa(getApplicationContext(), itemList);
+        final Fragment storeFragment = new SeccionStore(itemList);
+        final Fragment homeFragment = new SeccionInicio(itemList);
 
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -79,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
         }
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -88,12 +100,20 @@ public class MainActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
 
                 if (item.getItemId() == R.id.mapItem) {
+
+                    fragment = "mapa";
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, mapaFragment).commit();
+
                 }else if (item.getItemId() == R.id.homeItem) {
+
+                    fragment = "home";
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
+
                 }else if (item.getItemId() == R.id.storeItem) {
+
+                    fragment = "store";
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, storeFragment).commit();
                 }
@@ -150,37 +170,34 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     public void show() {
-        if (itemList.isEmpty()) {
-            itemList.add(new Item("Restaurantes", R.mipmap.ic_launcher));
-            itemList.add(new Item("Hoteles", R.mipmap.ic_launcher_round));
-            itemList.add(new Item("Entretenimiento", R.mipmap.ic_menu_direcction));
-            itemList.add(new Item("Servicios", R.mipmap.ic_menu_photos));
-            itemList.add(new Item("Cines", R.mipmap.ic_menu_play));
-            itemList.add(new Item("Parques", R.mipmap.ic_menu_store));
-            itemList.add(new Item("Instituciones", R.mipmap.ic_astrid));
-        }
 
         final DialogMultipleChoiceAdapter adapter =
                 new DialogMultipleChoiceAdapter(this, itemList);
 
-        new AlertDialog.Builder(this).setTitle("¿ Que buscas ?")
+        new AlertDialog.Builder(this).setTitle("¿ Qué buscas ?")
                 .setAdapter(adapter, null)
                 .setIcon(R.drawable.ic_map)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
-
-
                         Toast.makeText(getApplicationContext(),
                                 "getCheckedItem = " + adapter.getCheckedItem().size(),
                                 Toast.LENGTH_SHORT).show();
-                        Log.i(TAG, "lista de los cheados" + adapter.getCheckedItem());
 
+                        Fragment fragmentActual = null;
 
-                        SeccionMapa sm = new SeccionMapa(getApplicationContext());
-                        sm.filtrar(adapter.getCheckedItem());
+                        if ( fragment == "mapa" )
+                            fragmentActual = new SeccionMapa(getApplicationContext(), adapter.getCheckedItem());
+                        if ( fragment == "home" )
+                            fragmentActual = new SeccionInicio(adapter.getCheckedItem());
+                        if ( fragment == "store" )
+                            fragmentActual = new SeccionStore(adapter.getCheckedItem());
 
+                        FragmentManager fragmentManager = getSupportFragmentManager();
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, fragmentActual).commit();
 
 
                     }

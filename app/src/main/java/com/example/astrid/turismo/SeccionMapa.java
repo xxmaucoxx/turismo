@@ -93,25 +93,24 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
     List<Mark>  marks = new ArrayList<>();;
     List<Marker> markers = new ArrayList<>();
 
+    List<Item> categorias = new ArrayList<>();
+
 
     private static final String TAG = "MyActivity";
 
     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
     Query postRef = ref.child("puntos/Perú/Moquegua/points");
 
-    public SeccionMapa() {
-        super();
-        this.ctx = this.getContext();
-    }
-
-    public SeccionMapa(Context applicationContext) {
+    public SeccionMapa(Context applicationContext, List<Item> cats) {
         super();
         this.ctx = applicationContext;
+        this.categorias = cats;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_seccion_mapa, container, false);
 
@@ -267,6 +266,9 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+
+
+
                 for( DataSnapshot dsp : dataSnapshot.getChildren()){
                     Point point = dsp.getValue(Point.class);
                     if (dsp.child("ubicacion").getValue() != null) {

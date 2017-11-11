@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.example.astrid.turismo.adaptadores.AdapterPost;
 import com.example.astrid.turismo.adaptadores.AdapterStore;
+import com.example.astrid.turismo.models.Item;
 import com.example.astrid.turismo.models.Point;
 import com.example.astrid.turismo.models.Post;
 import com.google.firebase.database.DataSnapshot;
@@ -39,17 +40,25 @@ public class SeccionStore extends Fragment {
 
     private boolean aptoParaCargar = true;
 
-
     private DatabaseReference mDatabase;
-
 
     private static final String TAG = "Tiendas";
 
+    List<Item> categorias = new ArrayList<>();
+
+    /**
+     *
+     * Funciones
+     */
+
+    public SeccionStore(List<Item> cats) {
+        super();
+        this.categorias = cats;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
 
         View vista = inflater.inflate(R.layout.fragment_seccion_store, container, false);
 
