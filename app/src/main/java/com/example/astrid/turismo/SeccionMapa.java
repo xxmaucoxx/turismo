@@ -267,17 +267,30 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-
-
                 for( DataSnapshot dsp : dataSnapshot.getChildren()){
                     Point point = dsp.getValue(Point.class);
-                    if (dsp.child("ubicacion").getValue() != null) {
-                        for (DataSnapshot emp : dsp.child("ubicacion").getChildren()) {
-                            Site site = emp.getValue(Site.class);
-                            Mark mark = new Mark(dsp.getKey(),point.getCategoryStore(),point.getCloseStore(),point.getImgProfile(),point.getNameStore(),point.getOpenStore(),site.getDireccion(),site.getLatitud(),site.getLongitud());
-                            marks.add(mark);
+                    if (categorias.size() != 0) {
+                        for (Item dt : categorias) {
+                            if (Objects.equals(dt.getTitle(), point.getCategoryStore())) {
+                                if (dsp.child("ubicacion").getValue() != null) {
+                                    for (DataSnapshot emp : dsp.child("ubicacion").getChildren()) {
+                                        Site site = emp.getValue(Site.class);
+                                        Mark mark = new Mark(dsp.getKey(), point.getCategoryStore(), point.getCloseStore(), point.getImgProfile(), point.getNameStore(), point.getOpenStore(), site.getDireccion(), site.getLatitud(), site.getLongitud());
+                                        marks.add(mark);
+                                    }
+                                }
+                                break;
+                            }
                         }
-
+                    }
+                    else {
+                        if (dsp.child("ubicacion").getValue() != null) {
+                            for (DataSnapshot emp : dsp.child("ubicacion").getChildren()) {
+                                Site site = emp.getValue(Site.class);
+                                Mark mark = new Mark(dsp.getKey(), point.getCategoryStore(), point.getCloseStore(), point.getImgProfile(), point.getNameStore(), point.getOpenStore(), site.getDireccion(), site.getLatitud(), site.getLongitud());
+                                marks.add(mark);
+                            }
+                        }
                     }
                 }
                 printMarker();

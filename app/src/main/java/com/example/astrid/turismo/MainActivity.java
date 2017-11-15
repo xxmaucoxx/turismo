@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (itemList.isEmpty()) {
             itemList.add(new Item("Restaurantes", R.mipmap.ic_launcher));
+            itemList.add(new Item("Tienda", R.mipmap.ic_launcher));
             itemList.add(new Item("Hoteles", R.mipmap.ic_launcher_round));
             itemList.add(new Item("Entretenimiento", R.mipmap.ic_menu_direcction));
             itemList.add(new Item("Servicios", R.mipmap.ic_menu_photos));
