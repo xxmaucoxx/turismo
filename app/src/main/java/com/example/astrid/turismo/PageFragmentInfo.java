@@ -49,7 +49,7 @@ public class PageFragmentInfo extends Fragment {
         String texto = getArguments().getString("textFromActivityB");
         
 
-        String ruta = "usuarios/" + texto + "/empresa";
+        String ruta = "usuarios/" + texto + "/data/empresa";
 
         Log.i(TAG, "------------------ > consulta : " +  ruta);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();

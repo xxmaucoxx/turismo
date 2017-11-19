@@ -77,7 +77,7 @@ public class StorePage extends AppCompatActivity{
 
         Log.i(TAG, "Me llego : " + valor + " y "+ key );
 
-        String ruta = "usuarios/" + key + "/empresa";
+        String ruta = "usuarios/" + key + "/data/empresa";
 
         Log.i(TAG, "------------------ > consulta : " +  ruta);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
