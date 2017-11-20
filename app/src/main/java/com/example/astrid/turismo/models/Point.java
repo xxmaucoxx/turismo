@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Point {
     private String categoryStore;
+    private String color;
     private String closeStore;
     private String descriptionStore;
     private String imgPortada;
@@ -15,7 +16,7 @@ public class Point {
     public Point() {
 
     }
-    public Point(String categoryStore, String closeStore, String descriptionStore, String imgPortada, String imgProfile, String nameStore, String openStore, String page) {
+    public Point(String categoryStore, String closeStore, String descriptionStore, String imgPortada, String imgProfile, String nameStore, String openStore, String page, String color) {
         this.categoryStore = categoryStore;
         this.closeStore = closeStore;
         this.descriptionStore = descriptionStore;
@@ -25,6 +26,7 @@ public class Point {
         this.openStore = openStore;
 
 
+        this.color = color;
     }
 
     public String getCategoryStore() {
@@ -83,4 +85,11 @@ public class Point {
         this.openStore = openStore;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

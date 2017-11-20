@@ -82,7 +82,8 @@ public class SeccionInicio extends Fragment {
                         dataSnapshot.getChildren()){
                     lastkey = snapshot.getKey();
                     Post post = snapshot.getValue(Post.class);
-                    Post real = new Post(lastkey,post.getName(),post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(), post.getIdStore());
+                    Log.i(TAG,"_________________> Color : "+ post.getColor());
+                    Post real = new Post(lastkey,post.getName(),post.getColor(), post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(), post.getIdStore());
                     posts.add(real);
                 }
                 adapterPost.notifyDataSetChanged();
@@ -135,7 +136,7 @@ public class SeccionInicio extends Fragment {
                     if (!Objects.equals(passkey, snapshot.getKey())){
                         Post post = snapshot.getValue(Post.class);
                         Log.i(TAG,"||||||||||||||||||||| De lo capturado retorno : " +post.getIdStore());
-                        Post real = new Post(lastkey,post.getName(),post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(),post.getIdStore());
+                        Post real = new Post(lastkey,post.getName(), post.getColor(), post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(),post.getIdStore());
                         adapterPost.adicionarListaPost(real);
                     }
                     countArrow++;

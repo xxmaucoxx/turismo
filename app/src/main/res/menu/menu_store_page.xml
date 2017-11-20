@@ -4,12 +4,6 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <item
-        android:id="@+id/btn_view_products"
-        android:icon="@mipmap/ic_gane_play"
-        android:orderInCategory="100"
-        android:title="@string/atras"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/btn_favorite"
         android:icon="@mipmap/ic_heard_white"
         android:orderInCategory="100"

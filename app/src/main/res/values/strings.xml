@@ -28,4 +28,6 @@
     <string name="op_perfil">mi cuenta</string>
     <string name="op_closeapp">Cerrar</string>
     <string name="mi_cuenta">Mi cuenta</string>
+    <string name="Noticias">noticias</string>
+    <string name="Servicios">servicios</string>
 </resources>

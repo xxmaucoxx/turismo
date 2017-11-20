@@ -22,7 +22,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,7 +32,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.astrid.turismo.models.Item;
 import com.example.astrid.turismo.models.Mark;
-import com.example.astrid.turismo.dialogs.MyDialogFragment;
 import com.example.astrid.turismo.models.Point;
 import com.example.astrid.turismo.models.Site;
 import com.example.astrid.turismo.route.DataParser;
@@ -275,7 +273,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
                                 if (dsp.child("ubicacion").getValue() != null) {
                                     for (DataSnapshot emp : dsp.child("ubicacion").getChildren()) {
                                         Site site = emp.getValue(Site.class);
-                                        Mark mark = new Mark(dsp.getKey(), point.getCategoryStore(), point.getCloseStore(), point.getImgProfile(), point.getNameStore(), point.getOpenStore(), site.getDireccion(), site.getLatitud(), site.getLongitud());
+                                        Mark mark = new Mark(dsp.getKey(), point.getColor(), point.getCategoryStore(), point.getCloseStore(), point.getImgProfile(), point.getNameStore(), point.getOpenStore(), site.getDireccion(), site.getLatitud(), site.getLongitud());
                                         marks.add(mark);
                                     }
                                 }
@@ -287,7 +285,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
                         if (dsp.child("ubicacion").getValue() != null) {
                             for (DataSnapshot emp : dsp.child("ubicacion").getChildren()) {
                                 Site site = emp.getValue(Site.class);
-                                Mark mark = new Mark(dsp.getKey(), point.getCategoryStore(), point.getCloseStore(), point.getImgProfile(), point.getNameStore(), point.getOpenStore(), site.getDireccion(), site.getLatitud(), site.getLongitud());
+                                Mark mark = new Mark(dsp.getKey(), point.getColor(), point.getCategoryStore(), point.getCloseStore(), point.getImgProfile(), point.getNameStore(), point.getOpenStore(), site.getDireccion(), site.getLatitud(), site.getLongitud());
                                 marks.add(mark);
                             }
                         }
@@ -422,6 +420,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
                 Intent intent=new Intent(getContext(), StorePage.class);
                 intent.putExtra("Tienda", marks.get(indice).getNameStore());
                 intent.putExtra("Key", marks.get(indice).getKey());
+                intent.putExtra("Color", marks.get(indice).getColor());
                 startActivity(intent);
             }
         });
@@ -433,6 +432,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
                 Intent intent=new Intent(getContext(), StoreProduct.class);
                 intent.putExtra("Tienda", marks.get(indice).getNameStore());
                 intent.putExtra("Key", marks.get(indice).getKey());
+                intent.putExtra("Color", marks.get(indice).getColor());
                 startActivity(intent);
             }
         });
@@ -443,6 +443,7 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
                 Intent intent=new Intent(getContext(), StoreGalery.class);
                 intent.putExtra("Tienda", marks.get(indice).getNameStore());
                 intent.putExtra("Key", marks.get(indice).getKey());
+                intent.putExtra("Color", marks.get(indice).getColor());
                 startActivity(intent);
             }
         });

@@ -12,6 +12,7 @@ import java.util.Date;
 
 public class Page {
     private String categoryStore;
+    private String color;
     private String closeStore;
     private String descriptionStore;
     private String imgPortada;
@@ -26,8 +27,9 @@ public class Page {
     public Page() {
 
     }
-    public Page(String categoryStore, String closeStore, String descriptionStore, String imgPortada, String imgProfile, String nameStore, String openStore, String page) {
+    public Page(String categoryStore, String color, String closeStore, String descriptionStore, String imgPortada, String imgProfile, String nameStore, String openStore, String page) {
         this.categoryStore = categoryStore;
+        this.color = color;
         this.closeStore = closeStore;
         this.descriptionStore = descriptionStore;
         this.imgPortada = imgPortada;
@@ -121,4 +123,11 @@ public class Page {
 
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

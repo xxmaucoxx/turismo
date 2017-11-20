@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#ff9800</color>
-    <color name="colorPrimaryDark">#e65100</color>
-    <color name="colorAccent">#1abc9c</color>
+    <color name="colorPrimaryDark">#212121</color>
+    <color name="colorAccent">#fefefe</color>
     <color name="fondo">#a3cafa</color>
     <color name="fondoMenu">#f5dabd</color>
     <color name="translucent_black">#80000000</color>
 
     <color name="negro_semitransparente">#B2000000</color>
     <color name="blanco">#ffffff</color>
+
+    <color name="red">#f44336</color>
+    <color name="blue">#2962ff</color>
+    <color name="orange">#f57c00</color>
+    <color name="negro">#000000</color>
+    <color name="verde">#00796b</color>
+    <color name="morado">#673ab7</color>
+    <color name="fuxia">#ec407a</color>
+    <color name="cafe">#795548</color>
+    <color name="amarillo">#ffc400</color>
 </resources>

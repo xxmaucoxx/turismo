@@ -192,9 +192,11 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
         public void onClick(View v) {
             int position = getAdapterPosition();
             Post post = this.posts.get(position);
+            Log.i(TAG,"--------------------> El color es  :" + posts.get(position).getColor());
             Intent intent=new Intent(this.ctx, StorePage.class);
             intent.putExtra("Tienda", posts.get(position).getName());
             intent.putExtra("Key", posts.get(position).getIdStore());
+            intent.putExtra("Color", posts.get(position).getColor());
             ctx.startActivity(intent);
 
         }

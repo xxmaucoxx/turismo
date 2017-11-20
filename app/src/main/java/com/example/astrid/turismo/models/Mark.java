@@ -2,6 +2,7 @@ package com.example.astrid.turismo.models;
 
 public class Mark {
     private String key;
+    private String color;
     private String categoryStore;
     private String closeStore;
     private String imgProfile;
@@ -14,8 +15,9 @@ public class Mark {
     public Mark() {
 
     }
-    public Mark(String key, String categoryStore, String closeStore, String imgProfile, String nameStore, String openStore, String direccion, String latitud, String longitud) {
+    public Mark(String key, String color, String categoryStore, String closeStore, String imgProfile, String nameStore, String openStore, String direccion, String latitud, String longitud) {
         this.key = key;
+        this.color = color;
         this.categoryStore = categoryStore;
         this.closeStore = closeStore;
         this.imgProfile = imgProfile;
@@ -96,5 +98,13 @@ public class Mark {
 
     public void setLongitud(String longitud) {
         this.longitud = longitud;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

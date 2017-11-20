@@ -39,8 +39,8 @@ public class PageFragmentInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-         final View v = inflater.inflate(R.layout.fragment_page_fragment_info, container, false);
+
+        final View v = inflater.inflate(R.layout.fragment_page_fragment_info, container, false);
 
         socials = new ArrayList<>();
         sites = new ArrayList<>();
@@ -66,6 +66,50 @@ public class PageFragmentInfo extends Fragment {
                 TextView txt_description_store;
                 txt_description_store = (TextView) v.findViewById(R.id.txt_description_store);
                 txt_description_store.setText(data.getDescriptionStore());
+
+                TextView txt_name_store;
+                TextView txt_category_store;
+                TextView txt_open_store;
+                TextView txt_close_store;
+                ImageView img_portada;
+                ImageView img_profile;
+
+
+                txt_category_store = (TextView)  v.findViewById(R.id.txt_category_store);
+                txt_category_store.setText(data.getCategoryStore());
+
+
+
+                txt_open_store = (TextView)  v.findViewById(R.id.txt_open_store);
+                try {
+                    txt_open_store.setText(data.getHoraOpen());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                txt_close_store = (TextView)  v.findViewById(R.id.txt_close_store);
+                try {
+                    txt_close_store.setText(data.getHoraClose());
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+
+                String urlPortada = data.getImgPortada();
+                img_portada = (ImageView)  v.findViewById(R.id.img_portada);
+
+                String urlProfile = data.getImgProfile();
+                img_profile = (ImageView)  v.findViewById(R.id.img_profile);
+
+                Glide.with(getContext())
+                        .load(urlPortada)
+                        .crossFade()
+                        .centerCrop()
+                        .into(img_portada);
+                Glide.with(getContext())
+                        .load(urlProfile)
+                        .crossFade()
+                        .centerCrop()
+                        .into(img_profile);
 
                 WebView webview = (WebView) v.findViewById(R.id.txt_page_store);
                 String contenido = data.getPage();

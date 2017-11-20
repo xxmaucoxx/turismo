@@ -1,7 +1,5 @@
 package com.example.astrid.turismo;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -77,7 +75,7 @@ public class PageFragmentNoticia extends Fragment {
                         dataSnapshot.getChildren()){
                     lastkey = snapshot.getKey();
                     Post post = snapshot.getValue(Post.class);
-                    Post real = new Post(lastkey,post.getName(),post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(), post.getIdStore());
+                    Post real = new Post(lastkey,post.getName(), post.getColor(), post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(), post.getIdStore());
                     posts.add(real);
                 }
                 adapterPost.notifyDataSetChanged();
@@ -130,7 +128,7 @@ public class PageFragmentNoticia extends Fragment {
                     if (!Objects.equals(passkey, snapshot.getKey())){
                         Post post = snapshot.getValue(Post.class);
                         Log.i(TAG,"||||||||||||||||||||| De lo capturado retorno : " +post.getIdStore());
-                        Post real = new Post(lastkey,post.getName(),post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(),post.getIdStore());
+                        Post real = new Post(lastkey,post.getName(), post.getColor(), post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(),post.getIdStore());
                         adapterPost.adicionarListaPost(real);
                     }
                     countArrow++;

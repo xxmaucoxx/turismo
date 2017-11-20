@@ -30,13 +30,8 @@
         <activity android:name=".MainActivity"/>
 
         <activity android:name=".LoginActivity" />
-        <activity
-            android:name=".StorePage"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
+
+        <activity android:name=".StorePage" />
         <activity
             android:name=".StoreGalery"
             android:parentActivityName=".MainActivity">

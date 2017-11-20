@@ -4,6 +4,7 @@ package com.example.astrid.turismo.models;
 public class Post {
     private String key;
     private String name;
+    private String color;
     private String categoryStore;
     private String closeStore;
     private String openStore;
@@ -17,9 +18,10 @@ public class Post {
         
     }
 
-    public Post(String key, String name, String categoryStore, String closeStore, String openStore, String img, String upfecha, String imgPost, String decripcion, String idStore) {
+    public Post(String key, String name, String color, String categoryStore, String closeStore, String openStore, String img, String upfecha, String imgPost, String decripcion, String idStore) {
         this.key = key;
         this.name = name;
+        this.color = color;
         this.categoryStore = categoryStore;
         this.closeStore = closeStore;
         this.openStore = openStore;
@@ -108,5 +110,13 @@ public class Post {
 
     public void setIdStore(String idStore) {
         this.idStore = idStore;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

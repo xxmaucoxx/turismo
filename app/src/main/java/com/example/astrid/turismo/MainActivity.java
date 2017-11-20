@@ -44,9 +44,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView nameTextView;
-    private TextView emailTextView;
-    private TextView uidTextView;
 
     private BottomNavigationView bottomNavigationView;
 
