@@ -2,6 +2,9 @@ package com.example.astrid.turismo.adaptadores;
 
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.astrid.turismo.R;
 import com.example.astrid.turismo.models.Point;
 import com.example.astrid.turismo.models.Post;
@@ -37,18 +41,23 @@ public class AdapterStore extends RecyclerView.Adapter<AdapterStore.PointViewHol
     }
 
     @Override
-    public void onBindViewHolder(PointViewHolder holder, int position) {
+    public void onBindViewHolder(final PointViewHolder holder, int position) {
         Point point = points.get(position);
         holder.txt_card_name.setText(point.getNameStore());
         holder.txt_card_category.setText(point.getCategoryStore());
         holder.txt_card_description.setText(point.getDescriptionStore());
         String url = point.getImgProfile();
 
-        Glide.with(context)
-                .load(url)
-                .crossFade()
-                .centerCrop()
-                .into(holder.img_store);
+
+        Glide.with(context).load(url).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.img_store) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                holder.img_store.setImageDrawable(circularBitmapDrawable);
+            }
+        });
 
     }
 

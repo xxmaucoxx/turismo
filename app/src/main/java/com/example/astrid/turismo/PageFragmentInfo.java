@@ -1,8 +1,12 @@
 package com.example.astrid.turismo;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.example.astrid.turismo.models.Page;
 import com.example.astrid.turismo.models.Site;
 import com.example.astrid.turismo.models.Social;
@@ -72,11 +77,14 @@ public class PageFragmentInfo extends Fragment {
                 TextView txt_open_store;
                 TextView txt_close_store;
                 ImageView img_portada;
-                ImageView img_profile;
-
+                final ImageView img_profile;
 
                 txt_category_store = (TextView)  v.findViewById(R.id.txt_category_store);
                 txt_category_store.setText(data.getCategoryStore());
+
+                txt_name_store = (TextView)  v.findViewById(R.id.txt_name_store);
+                txt_name_store.setText(data.getNameStore());
+
 
 
 
@@ -105,11 +113,16 @@ public class PageFragmentInfo extends Fragment {
                         .crossFade()
                         .centerCrop()
                         .into(img_portada);
-                Glide.with(getContext())
-                        .load(urlProfile)
-                        .crossFade()
-                        .centerCrop()
-                        .into(img_profile);
+
+                Glide.with(getContext()).load(urlProfile).asBitmap().centerCrop().into(new BitmapImageViewTarget(img_profile) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable =
+                                RoundedBitmapDrawableFactory.create(getContext().getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        img_profile.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
 
                 WebView webview = (WebView) v.findViewById(R.id.txt_page_store);
                 String contenido = data.getPage();
