@@ -48,16 +48,12 @@ public class AdapterStore extends RecyclerView.Adapter<AdapterStore.PointViewHol
         holder.txt_card_description.setText(point.getDescriptionStore());
         String url = point.getImgProfile();
 
-
-        Glide.with(context).load(url).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.img_store) {
-            @Override
-            protected void setResource(Bitmap resource) {
-                RoundedBitmapDrawable circularBitmapDrawable =
-                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
-                circularBitmapDrawable.setCircular(true);
-                holder.img_store.setImageDrawable(circularBitmapDrawable);
-            }
-        });
+        Glide.with(context)
+                .load(url)
+                .crossFade()
+                .centerCrop()
+                .placeholder(R.drawable.com_facebook_button_login_background)
+                .into(holder.img_store);
 
     }
 

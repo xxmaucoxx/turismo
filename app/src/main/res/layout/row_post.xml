@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
@@ -24,7 +25,6 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
-                android:background="@color/fondo"
                 android:scaleType="centerCrop" />
 
             <LinearLayout
@@ -40,7 +40,7 @@
                     android:paddingLeft="10dp"
                     android:paddingTop="8dp"
                     android:text="titulo"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -94,11 +94,11 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:layout_weight="0.5"
-                    android:drawableLeft="@drawable/ic_head"
-                    android:text="Me Gusta"
+                    android:layout_weight="0.1"
+                    android:drawableLeft="@drawable/like3"
+                    android:text="Me gusta"
                     android:textColor="@color/cardview_dark_background"
-                    android:textSize="10sp" />
+                    android:textSize="9sp" />
 
 
             </LinearLayout>
@@ -111,14 +111,15 @@
                 android:orientation="vertical">
 
                 <Button
+                    android:id="@+id/btnComent"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:drawableLeft="@drawable/ic_coment"
+                    android:drawableLeft="@drawable/chat"
                     android:padding="8dp"
-                    android:text="Comentarios"
+                    android:text="Comentar"
                     android:textColor="@color/cardview_dark_background"
-                    android:textSize="10sp" />
+                    android:textSize="9sp" />
             </LinearLayout>
 
 
@@ -133,10 +134,10 @@
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="match_parent"
                     android:layout_height="38dp"
-                    android:drawableLeft="?attr/actionModeShareDrawable"
-                    android:text="Compartir"
+                    android:drawableLeft="@drawable/sign"
+                    android:text="Visitar"
                     android:textColor="@color/cardview_dark_background"
-                    android:textSize="10sp" />
+                    android:textSize="9sp" />
             </LinearLayout>
         </LinearLayout>
 

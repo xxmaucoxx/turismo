@@ -2,18 +2,24 @@ package com.example.astrid.turismo.adaptadores;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.example.astrid.turismo.PostActivity;
 import com.example.astrid.turismo.R;
 import com.example.astrid.turismo.StorePage;
 import com.example.astrid.turismo.models.Post;
@@ -46,19 +52,24 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
     }
 
     @Override
-    public void onBindViewHolder(PostViewHolder holder, int position) {
+    public void onBindViewHolder(final PostViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.txt_name.setText(post.getName());
         holder.txt_update.setText(getDate(post.getUpfecha()));
         String url = post.getImgPost();
 
         holder.txt_contenido.setText(post.getDecripcion());
-        Glide.with(context)
-                .load(post.getImg())
-                .crossFade()
-                .centerCrop()
-                .placeholder(R.drawable.com_facebook_button_login_background)
-                .into(holder.img_store);
+
+
+        Glide.with(context).load(post.getImg()).asBitmap().centerCrop().into(new BitmapImageViewTarget(holder.img_store) {
+            @Override
+            protected void setResource(Bitmap resource) {
+                RoundedBitmapDrawable circularBitmapDrawable =
+                        RoundedBitmapDrawableFactory.create(context.getResources(), resource);
+                circularBitmapDrawable.setCircular(true);
+                holder.img_store.setImageDrawable(circularBitmapDrawable);
+            }
+        });
 
         if (!Objects.equals(url, "")){
             //Log.i(TAG, url);
@@ -171,6 +182,7 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
         ImageView img_store;
         TextView txt_update;
         TextView txt_contenido;
+
         List<Post> posts = new ArrayList();
         Context ctx;
 
@@ -186,6 +198,19 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
             img_store = (ImageView) itemView.findViewById(R.id.img_store);
 
             txt_name.setOnClickListener(this);
+
+            Button Button1 = (Button) itemView.findViewById(R.id.btnComent);
+
+            Button1.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    openComent(v);
+                }
+
+            });
+
         }
 
         @Override
@@ -199,6 +224,18 @@ public class AdapterPost  extends  RecyclerView.Adapter<AdapterPost.PostViewHold
             intent.putExtra("Color", posts.get(position).getColor());
             ctx.startActivity(intent);
 
+        }
+
+        private void openComent(View v){
+            int position = getAdapterPosition();
+            Post post = this.posts.get(position);
+            Intent intent=new Intent(this.ctx, PostActivity.class);
+            intent.putExtra("Tienda", posts.get(position).getName());
+            intent.putExtra("KeyStore", posts.get(position).getIdStore());
+            intent.putExtra("KeyPots", posts.get(position).getKey());
+            intent.putExtra("Imagen", posts.get(position).getImgPost());
+            intent.putExtra("Descripcion", posts.get(position).getDecripcion());
+            ctx.startActivity(intent);
         }
     }
 

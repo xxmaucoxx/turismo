@@ -44,7 +44,6 @@ public class StorePage extends AppCompatActivity{
         String key = parametros.getString("Key");
         String colors = parametros.getString("Color");
 
-
         setTitle(valor);
 
 
@@ -109,9 +108,7 @@ public class StorePage extends AppCompatActivity{
                         break;
                 }
                 getSupportActionBar().setBackgroundDrawable(new ColorDrawable(myColor));
-
                 bottomNavigationView.setBackground(new ColorDrawable(myColor));
-
             }
 
             @Override

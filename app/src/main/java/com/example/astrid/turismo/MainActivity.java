@@ -3,6 +3,7 @@ package com.example.astrid.turismo;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -60,15 +61,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_aplication_logo);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         if (itemList.isEmpty()) {
-            itemList.add(new Item("Restaurantes", R.mipmap.ic_launcher));
-            itemList.add(new Item("Tienda", R.mipmap.ic_launcher));
-            itemList.add(new Item("Hoteles", R.mipmap.ic_launcher_round));
-            itemList.add(new Item("Entretenimiento", R.mipmap.ic_menu_direcction));
-            itemList.add(new Item("Servicios", R.mipmap.ic_menu_photos));
-            itemList.add(new Item("Cines", R.mipmap.ic_menu_play));
-            itemList.add(new Item("Parques", R.mipmap.ic_menu_store));
-            itemList.add(new Item("Instituciones", R.mipmap.ic_astrid));
+            itemList.add(new Item("Restaurant", R.mipmap.ic_icon_restaurante));
+            itemList.add(new Item("Alojamiento", R.mipmap.ic_icon_hotel));
+            itemList.add(new Item("Entretenimiento", R.mipmap.ic_icon_play));
+            itemList.add(new Item("Bancas", R.mipmap.ic_icon_bancas));
+            itemList.add(new Item("Tienda", R.mipmap.ic_icon_store));
+            itemList.add(new Item("Servicios", R.mipmap.ic_icon_servicios));
+            itemList.add(new Item("Bodega", R.mipmap.ic_icon_bar));
+            itemList.add(new Item("Cultural", R.mipmap.ic_icon_worl));
+            itemList.add(new Item("Salud", R.mipmap.ic_icon_salud));
+            itemList.add(new Item("Trasporte", R.mipmap.ic_icon_taxi));
         }
 
         final Fragment mapaFragment = new SeccionMapa(getApplicationContext(), itemList);
@@ -89,7 +97,12 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
         }
 
+        int myColor = getResources().getColor(R.color.colorPrimary);
+
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+
+        bottomNavigationView.setBackground(new ColorDrawable(myColor));
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -151,9 +164,6 @@ public class MainActivity extends AppCompatActivity {
         final Fragment profileFragment = new SeccionPerfil();
         switch (item.getItemId()) {
 
-            case R.id.btn_buscar:
-                startActivity(new Intent(this, MainActivity.class ));
-                return true;
 
             case R.id.btn_filtrar:
                 show();

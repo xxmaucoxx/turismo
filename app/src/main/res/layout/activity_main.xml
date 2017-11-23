@@ -24,6 +24,8 @@
             android:layout_alignParentBottom="true"
             android:background="@color/cardview_light_background"
             app:layout_scrollFlags="scroll|enterAlways|snap"
+            app:itemIconTint="@color/blanco"
+            app:itemTextColor="@color/blanco"
             app:menu="@menu/menu_navigation" />
 
     </RelativeLayout>

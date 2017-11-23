@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent">
+        android:background="@color/blanco">
 
         <ImageView
             android:id="@+id/img_portada"
@@ -61,7 +61,8 @@
                 android:layout_weight="0.12"
                 android:background="@drawable/op1c"
                 android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:translationZ="5dp">
 
                 <TextView
                     android:layout_width="20dp"
@@ -139,6 +140,15 @@
                     android:textColor="@color/cardview_light_background"
                     android:textSize="12sp" />
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="191dp"
+            android:background="@drawable/contstore"
+            android:gravity="bottom">
+
         </LinearLayout>
 
     </RelativeLayout>
