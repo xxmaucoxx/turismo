@@ -209,11 +209,48 @@ public class SeccionMapa extends Fragment implements OnMapReadyCallback, Locatio
             double lat = Double.parseDouble(mark.getLatitud());
             double lng = Double.parseDouble(mark.getLongitud());
             LatLng coordenadas = new LatLng(lat, lng);
+
             Marker ubicacion = nGoogleMap.addMarker(new MarkerOptions()
-                    .position(coordenadas)
-                    .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_mrest)));
+                    .position(coordenadas));
             ubicacion.setTag("store-"+countID);
             markers.add(ubicacion);
+
+            switch (mark.getCategoryStore())
+            {
+                case "Restaurant":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_restaurant));
+                    break;
+                case "Alojamiento":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_hotel));
+                    break;
+                case "Entretenimiento":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_game));
+                    break;
+                case "Bancas":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_money));
+                    break;
+                case "Tienda":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_store));
+                    break;
+                case "Servicios":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_service));
+                    break;
+                case "Bodega":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_bar));
+                    break;
+                case "Cultural":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_cultural));
+                    break;
+                case "Salud":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_salud));
+                    break;
+                case "Trasporte":
+                    ubicacion.setIcon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_map_transporte));
+                    break;
+
+            }
+
+
         }
     }
     public void filtrar(List<Item> lista) {
