@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -54,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "Tiendas";
 
+    LocationManager locationManager;
+    AlertDialog alert = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_aplication_logo);
@@ -79,11 +83,6 @@ public class MainActivity extends AppCompatActivity {
             itemList.add(new Item("Trasporte", R.mipmap.ic_icon_taxi));
         }
 
-        final Fragment mapaFragment = new SeccionMapa(getApplicationContext(), itemList);
-        final Fragment storeFragment = new SeccionStore(itemList);
-        final Fragment homeFragment = new SeccionInicio(itemList);
-
-
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if (user != null) {
@@ -92,10 +91,90 @@ public class MainActivity extends AppCompatActivity {
             goLoginScreen();
         }
 
-        if (savedInstanceState == null) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
+        locationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
+
+        if ( !locationManager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ){
+            alertNoGPS();
         }
+        else {
+
+            if (savedInstanceState == null) {
+
+                final Fragment homeFragment = new SeccionInicio(itemList);
+
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
+            }
+
+            int myColor = getResources().getColor(R.color.colorPrimary);
+
+
+            bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+
+            bottomNavigationView.setBackground(new ColorDrawable(myColor));
+
+            bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                    FragmentManager fragmentManager = getSupportFragmentManager();
+
+                    if (item.getItemId() == R.id.mapItem) {
+
+                        fragment = "mapa";
+
+                        final Fragment mapaFragment = new SeccionMapa(getApplicationContext(), itemList);
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, mapaFragment).commit();
+
+                    }else if (item.getItemId() == R.id.homeItem) {
+
+                        fragment = "home";
+
+                        final Fragment homeFragment = new SeccionInicio(itemList);
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
+
+                    }else if (item.getItemId() == R.id.storeItem) {
+
+                        fragment = "store";
+
+                        final Fragment storeFragment = new SeccionStore(itemList);
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.fragmentContainer, storeFragment).commit();
+                    }
+                    return true;
+                }
+            });
+        }
+    }
+
+    private void alertNoGPS() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Debe activar el GPS")
+                .setCancelable(false)
+                .setPositiveButton("Activar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                });
+        alert = builder.create();
+        alert.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final Fragment homeFragment = new SeccionInicio(itemList);
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
+
 
         int myColor = getResources().getColor(R.color.colorPrimary);
 
@@ -113,18 +192,27 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.mapItem) {
 
                     fragment = "mapa";
+
+                    final Fragment mapaFragment = new SeccionMapa(getApplicationContext(), itemList);
+
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, mapaFragment).commit();
 
                 }else if (item.getItemId() == R.id.homeItem) {
 
                     fragment = "home";
+
+                    final Fragment homeFragment = new SeccionInicio(itemList);
+
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, homeFragment).commit();
 
                 }else if (item.getItemId() == R.id.storeItem) {
 
                     fragment = "store";
+
+                    final Fragment storeFragment = new SeccionStore(itemList);
+
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.fragmentContainer, storeFragment).commit();
                 }
@@ -132,9 +220,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
-
 
     private void goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
