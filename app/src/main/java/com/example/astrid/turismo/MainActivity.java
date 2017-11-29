@@ -71,16 +71,16 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         if (itemList.isEmpty()) {
-            itemList.add(new Item("Restaurant", R.mipmap.ic_icon_restaurante));
-            itemList.add(new Item("Alojamiento", R.mipmap.ic_icon_hotel));
-            itemList.add(new Item("Entretenimiento", R.mipmap.ic_icon_play));
-            itemList.add(new Item("Bancas", R.mipmap.ic_icon_bancas));
-            itemList.add(new Item("Tienda", R.mipmap.ic_icon_store));
-            itemList.add(new Item("Servicios", R.mipmap.ic_icon_servicios));
-            itemList.add(new Item("Bodega", R.mipmap.ic_icon_bar));
-            itemList.add(new Item("Cultural", R.mipmap.ic_icon_worl));
-            itemList.add(new Item("Salud", R.mipmap.ic_icon_salud));
-            itemList.add(new Item("Trasporte", R.mipmap.ic_icon_taxi));
+            itemList.add(new Item("Restaurant", R.mipmap.ic_icon_restaurante, true));
+            itemList.add(new Item("Alojamiento", R.mipmap.ic_icon_hotel, true));
+            itemList.add(new Item("Entretenimiento", R.mipmap.ic_icon_play, true));
+            itemList.add(new Item("Bancas", R.mipmap.ic_icon_bancas, true));
+            itemList.add(new Item("Tienda", R.mipmap.ic_icon_store, true));
+            itemList.add(new Item("Servicios", R.mipmap.ic_icon_servicios, true));
+            itemList.add(new Item("Bodega", R.mipmap.ic_icon_bar, true));
+            itemList.add(new Item("Cultural", R.mipmap.ic_icon_worl, true));
+            itemList.add(new Item("Salud", R.mipmap.ic_icon_salud, true));
+            itemList.add(new Item("Trasporte", R.mipmap.ic_icon_taxi, true));
         }
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

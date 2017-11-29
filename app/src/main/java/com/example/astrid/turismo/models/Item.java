@@ -6,9 +6,10 @@ public class Item {
     private int imageRes;
     private boolean checked;
 
-    public Item(String title, int imageRes) {
+    public Item(String title, int imageRes, boolean checked) {
         this.title = title;
         this.imageRes = imageRes;
+        this.checked = checked;
     }
 
     public String getTitle() {
