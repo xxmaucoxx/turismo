@@ -72,19 +72,30 @@ public class SeccionInicio extends Fragment {
 
         aptoParaCargar = true;
 
-
-
         postRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 posts.removeAll(posts);
-                for( DataSnapshot snapshot :
-                        dataSnapshot.getChildren()){
+                for( DataSnapshot snapshot : dataSnapshot.getChildren()){
+
                     lastkey = snapshot.getKey();
                     Post post = snapshot.getValue(Post.class);
-                    Log.i(TAG,"_________________> Color : "+ post.getColor());
-                    Post real = new Post(lastkey,post.getName(),post.getColor(), post.getCategoryStore(),post.getCloseStore(),post.getOpenStore(),post.getImg(),post.getUpfecha(),post.getImgPost(),post.getDecripcion(), post.getIdStore());
-                    posts.add(real);
+
+                    if (categorias.size() != 0) {
+                        for (Item dt : categorias) {
+                            if (Objects.equals(dt.getTitle(), post.getCategoryStore())) {
+
+                                Post real = new Post(lastkey, post.getName(), post.getColor(), post.getCategoryStore(), post.getCloseStore(), post.getOpenStore(), post.getImg(), post.getUpfecha(), post.getImgPost(), post.getDecripcion(), post.getIdStore());
+                                posts.add(real);
+
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        Post real = new Post(lastkey, post.getName(), post.getColor(), post.getCategoryStore(), post.getCloseStore(), post.getOpenStore(), post.getImg(), post.getUpfecha(), post.getImgPost(), post.getDecripcion(), post.getIdStore());
+                        posts.add(real);
+                    }
                 }
                 adapterPost.notifyDataSetChanged();
             }

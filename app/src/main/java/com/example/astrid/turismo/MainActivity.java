@@ -100,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
 
             if (savedInstanceState == null) {
 
+                fragment = "home";
+
                 final Fragment homeFragment = new SeccionInicio(itemList);
 
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -169,6 +171,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        fragment = "home";
 
         final Fragment homeFragment = new SeccionInicio(itemList);
 
@@ -268,7 +272,7 @@ public class MainActivity extends AppCompatActivity {
         final DialogMultipleChoiceAdapter adapter =
                 new DialogMultipleChoiceAdapter(this, itemList);
 
-        new AlertDialog.Builder(this).setTitle("¿ Qué buscas ?")
+        new AlertDialog.Builder(this).setTitle("¿Qué buscas?")
                 .setAdapter(adapter, null)
                 .setIcon(R.drawable.ic_map)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
